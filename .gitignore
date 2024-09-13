@@ -1,1 +1,4 @@
 **/build/*
+game_engine/build
+game_engine/build/*
+**/game_engine/build
