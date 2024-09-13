@@ -44,7 +44,7 @@ void GameState::place_major_pieces(int row, const std::string& color) {
 
 
 // validate a move based on miece movement rules
-bool GameState::is_valid_move(int start_row, int start_col, int end_row int end_col) {
+bool GameState::is_valid_move(int start_row, int start_col, int end_row, int end_col) {
     GameEntity piece = board[start_row][start_col];
     if (piece.name == "") {
         std::cout << "No piece at the selected position!" << std::endl;
@@ -102,20 +102,77 @@ bool GameState::is_valid_rook_move(int start_row, int start_col, int end_row, in
     }
 
     //check if path is clear
-    if (start_row == end_row {
+    if (start_row == end_row) {
         int step = (start_col < end_col) ? 1 : -1;
         for (int col = start_col + step; col != end_col; col += step) {
-            if (board[start_row][col.name] != "") return false; //Blocked
+            if (board[start_row][col].name != "") return false; //Blocked
         }
     } else {
         int step = (start_row < end_row) ? 1 : -1;
         for (int row = start_row + step; row != end_row; row += step) {
-            if (board[row][start_col].name ! "") return false; //Blocked again
+            if (board[row][start_col].name != "") return false; //Blocked again
         }
     }
 
     return true;
 }
+
+
+// knight move
+bool GameState::is_valid_knight_move(int start_row, int start_col, int end_row, int end_col) {
+    int row_diff = std::abs(start_row - end_row);
+    int col_diff = std::abs(start_col - end_col);
+
+    // The L shape
+    if ((row_diff == 2 && col_diff == 1) || (row_diff == 1 && col_diff == 2)) {
+        return true;
+    }
+
+    return false;
+}
+
+
+// bishop move
+bool GameState::is_valid_bishop_move(int start_row, int start_col, int end_row, int end_col) {
+    if (std::abs(start_row - end_row) != std::abs(start_col - end_col)) {
+            return false; // This is the diagonal move
+    }
+
+    // Check if path is clear
+    int row_step = (start_row < end_row) ? 1 : -1;
+    int col_step = (start_col < end_col) ? 1 : -1;
+    int row = start_row + row_step;
+    int col = start_col + col_step;
+    while (row != end_row && col != end_col) {
+        if (board[row][col].name != "") return false; // Blocked
+        row += row_step;
+        col += col_step;
+    }
+
+    return true;
+}
+
+
+// Queen move (call rook and bishop functions)
+bool GameState::is_valid_queen_move(int start_row, int start_col, int end_row, int end_col) {
+    return is_valid_rook_move(start_row, start_col, end_row, end_col) ||
+           is_valid_bishop_move(start_row, start_col, end_row, end_col);
+}
+
+
+// King move
+bool GameState::is_valid_king_move(int start_row, int start_col, int end_row, int end_col) {
+    int row_diff = std::abs(start_row - end_row);
+    int col_diff = std::abs(start_col - end_col);
+
+    // any direction movement
+    if (row_diff <= 1 && col_diff <=1) {
+        return true;
+    }
+
+    return false;
+}
+
 
 // Function to display the current board state
 void GameState::display_board() {
