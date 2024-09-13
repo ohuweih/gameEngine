@@ -1,8 +1,8 @@
 #include <SDL2/SDL.h>
 #include <iostream>
-#include "GameState.h"
-#include "Renderer.h"
-#include "Input.h"
+#include "header/GameState.h"
+#include "header/Renderer.h"
+#include "header/Input.h"
 
 
 int main(int argc, char* argv[]) {

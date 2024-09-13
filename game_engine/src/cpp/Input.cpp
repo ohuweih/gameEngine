@@ -1,4 +1,4 @@
-#include "Input.h"
+#include "../header/Input.h"
 
 // Function to conver mouse click to coordinates to the board coordinates
 bool get_board_coordinates(int mouse_x, int mouse_y, int& row, int& col) {

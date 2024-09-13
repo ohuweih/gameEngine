@@ -1,5 +1,4 @@
-
-#include "GameState.h"
+#include "../header/GameState.h"
 #include <iostream>
 
 // Constructor implementation for GameEntity

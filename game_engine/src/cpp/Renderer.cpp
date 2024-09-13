@@ -1,4 +1,4 @@
-#include "Renderer.h"
+#include "../header/Renderer.h"
 
 // Constants for board size
 const int TILE_SIZE = 75;  // Size of each square on the chessboard
