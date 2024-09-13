@@ -1,6 +1,7 @@
 #include "../header/GameState.h"
 #include <iostream>
 
+
 // Constructor implementation for GameEntity
 GameEntity::GameEntity(std::string n, std::string t, std::string c)
     : name(n), type(t), color(c) {}
@@ -11,40 +12,36 @@ GameState::GameState() {
     initialize_board();
 }
 
+
 // Function to set up the chess board
 void GameState::initialize_board() {
     board = std::vector<std::vector<GameEntity>>(8, std::vector<GameEntity>(8, GameEntity("", "empty", "")));
     
-    // Place white pawns
+    // Place all pawns
     for (int i = 0; i < 8; ++i) {
         board[1][i] = GameEntity("Pawn", "piece", "white");
-    }
-
-    // Place Black pawns
-    for (int i = 0; i < 8; ++i) {
         board[6][i] = GameEntity("Pawn", "piece", "black");
     }
 
-    // Place white major pieces
-    board[0][0] = GameEntity("Rook", "piece", "white");
-    board[0][1] = GameEntity("Knight", "piece", "white");
-    board[0][2] = GameEntity("Bishop", "piece", "white");
-    board[0][3] = GameEntity("Queen", "piece", "white");
-    board[0][4] = GameEntity("King", "piece", "white");
-    board[0][5] = GameEntity("Bishop", "piece", "white");
-    board[0][6] = GameEntity("Knight", "piece", "white");
-    board[0][7] = GameEntity("Rook", "piece", "white");
-
-    // Place black major pieces
-    board[7][0] = GameEntity("Rook", "piece", "black");
-    board[7][1] = GameEntity("Knight", "piece", "black");
-    board[7][2] = GameEntity("Bishop", "piece", "black");
-    board[7][3] = GameEntity("Queen", "piece", "black");
-    board[7][4] = GameEntity("King", "piece", "black");
-    board[7][5] = GameEntity("Bishop", "piece", "black");
-    board[7][6] = GameEntity("Knight", "piece", "black");
-    board[7][7] = GameEntity("Rook", "piece", "black");
+    place_major_pieces(0,"white"); // The function for this is below, starts on line 30 
+    place_major_pieces(7, "black");
 }
+
+
+// Function to place major pieces
+void GameState::place_major_pieces(int row, const std::string& color) {
+    // Place white major pieces
+    board[row][0] = GameEntity("Rook", "piece", color);
+    board[row][1] = GameEntity("Knight", "piece", color);
+    board[row][2] = GameEntity("Bishop", "piece", color);
+    board[row][3] = GameEntity("Queen", "piece", color);
+    board[row][4] = GameEntity("King", "piece", color);
+    board[row][5] = GameEntity("Bishop", "piece", color);
+    board[row][6] = GameEntity("Knight", "piece", color);
+    board[row][7] = GameEntity("Rook", "piece", color);
+
+}
+
 
 // Function to display the current board state
 void GameState::display_board() {
