@@ -8,8 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/ohuweih/coolName/game_engine/src/GameState.cpp" "CMakeFiles/gameEngine.dir/src/GameState.cpp.o" "gcc" "CMakeFiles/gameEngine.dir/src/GameState.cpp.o.d"
-  "/home/ohuweih/coolName/game_engine/src/main.cpp" "CMakeFiles/gameEngine.dir/src/main.cpp.o" "gcc" "CMakeFiles/gameEngine.dir/src/main.cpp.o.d"
+  "/home/ohuweih/gameEngine/game_engine/src/GameState.cpp" "CMakeFiles/gameEngine.dir/src/GameState.cpp.o" "gcc" "CMakeFiles/gameEngine.dir/src/GameState.cpp.o.d"
+  "/home/ohuweih/gameEngine/game_engine/src/Input.cpp" "CMakeFiles/gameEngine.dir/src/Input.cpp.o" "gcc" "CMakeFiles/gameEngine.dir/src/Input.cpp.o.d"
+  "/home/ohuweih/gameEngine/game_engine/src/Renderer.cpp" "CMakeFiles/gameEngine.dir/src/Renderer.cpp.o" "gcc" "CMakeFiles/gameEngine.dir/src/Renderer.cpp.o.d"
+  "/home/ohuweih/gameEngine/game_engine/src/main.cpp" "CMakeFiles/gameEngine.dir/src/main.cpp.o" "gcc" "CMakeFiles/gameEngine.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links.

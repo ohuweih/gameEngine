@@ -1,5 +1,5 @@
 CMakeFiles/gameEngine.dir/src/main.cpp.o: \
- /home/ohuweih/coolName/game_engine/src/main.cpp \
+ /home/ohuweih/gameEngine/game_engine/src/main.cpp \
  /usr/include/stdc-predef.h /usr/include/SDL2/SDL.h \
  /usr/include/SDL2/SDL_main.h /usr/include/SDL2/SDL_stdinc.h \
  /usr/include/SDL2/SDL_config.h \
@@ -283,8 +283,10 @@ CMakeFiles/gameEngine.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /home/ohuweih/coolName/game_engine/src/GameState.h \
+ /home/ohuweih/gameEngine/game_engine/src/GameState.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_uninitialized.h \
  /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
- /usr/include/c++/11/bits/vector.tcc
+ /usr/include/c++/11/bits/vector.tcc \
+ /home/ohuweih/gameEngine/game_engine/src/Renderer.h \
+ /home/ohuweih/gameEngine/game_engine/src/Input.h

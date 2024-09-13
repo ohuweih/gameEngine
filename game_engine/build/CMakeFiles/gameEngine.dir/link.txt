@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/gameEngine.dir/src/main.cpp.o CMakeFiles/gameEngine.dir/src/GameState.cpp.o -o gameEngine  -L/usr/lib/x86_64-linux-gnu  -lSDL2 
+/usr/bin/c++ CMakeFiles/gameEngine.dir/src/main.cpp.o CMakeFiles/gameEngine.dir/src/GameState.cpp.o CMakeFiles/gameEngine.dir/src/Renderer.cpp.o CMakeFiles/gameEngine.dir/src/Input.cpp.o -o gameEngine  -L/usr/lib/x86_64-linux-gnu  -lSDL2 

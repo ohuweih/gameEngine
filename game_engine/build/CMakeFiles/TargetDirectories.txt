@@ -1,3 +1,3 @@
-/home/ohuweih/coolName/game_engine/build/CMakeFiles/gameEngine.dir
-/home/ohuweih/coolName/game_engine/build/CMakeFiles/edit_cache.dir
-/home/ohuweih/coolName/game_engine/build/CMakeFiles/rebuild_cache.dir
+/home/ohuweih/gameEngine/game_engine/build/CMakeFiles/gameEngine.dir
+/home/ohuweih/gameEngine/game_engine/build/CMakeFiles/edit_cache.dir
+/home/ohuweih/gameEngine/game_engine/build/CMakeFiles/rebuild_cache.dir

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ohuweih/coolName/game_engine
+CMAKE_SOURCE_DIR = /home/ohuweih/gameEngine/game_engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ohuweih/coolName/game_engine/build
+CMAKE_BINARY_DIR = /home/ohuweih/gameEngine/game_engine/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/gameEngine.dir/depend.make
@@ -72,44 +72,76 @@ include CMakeFiles/gameEngine.dir/flags.make
 CMakeFiles/gameEngine.dir/src/main.cpp.o: CMakeFiles/gameEngine.dir/flags.make
 CMakeFiles/gameEngine.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/gameEngine.dir/src/main.cpp.o: CMakeFiles/gameEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ohuweih/coolName/game_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/gameEngine.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gameEngine.dir/src/main.cpp.o -MF CMakeFiles/gameEngine.dir/src/main.cpp.o.d -o CMakeFiles/gameEngine.dir/src/main.cpp.o -c /home/ohuweih/coolName/game_engine/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ohuweih/gameEngine/game_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/gameEngine.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gameEngine.dir/src/main.cpp.o -MF CMakeFiles/gameEngine.dir/src/main.cpp.o.d -o CMakeFiles/gameEngine.dir/src/main.cpp.o -c /home/ohuweih/gameEngine/game_engine/src/main.cpp
 
 CMakeFiles/gameEngine.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gameEngine.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ohuweih/coolName/game_engine/src/main.cpp > CMakeFiles/gameEngine.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ohuweih/gameEngine/game_engine/src/main.cpp > CMakeFiles/gameEngine.dir/src/main.cpp.i
 
 CMakeFiles/gameEngine.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gameEngine.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ohuweih/coolName/game_engine/src/main.cpp -o CMakeFiles/gameEngine.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ohuweih/gameEngine/game_engine/src/main.cpp -o CMakeFiles/gameEngine.dir/src/main.cpp.s
 
 CMakeFiles/gameEngine.dir/src/GameState.cpp.o: CMakeFiles/gameEngine.dir/flags.make
 CMakeFiles/gameEngine.dir/src/GameState.cpp.o: ../src/GameState.cpp
 CMakeFiles/gameEngine.dir/src/GameState.cpp.o: CMakeFiles/gameEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ohuweih/coolName/game_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/gameEngine.dir/src/GameState.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gameEngine.dir/src/GameState.cpp.o -MF CMakeFiles/gameEngine.dir/src/GameState.cpp.o.d -o CMakeFiles/gameEngine.dir/src/GameState.cpp.o -c /home/ohuweih/coolName/game_engine/src/GameState.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ohuweih/gameEngine/game_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/gameEngine.dir/src/GameState.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gameEngine.dir/src/GameState.cpp.o -MF CMakeFiles/gameEngine.dir/src/GameState.cpp.o.d -o CMakeFiles/gameEngine.dir/src/GameState.cpp.o -c /home/ohuweih/gameEngine/game_engine/src/GameState.cpp
 
 CMakeFiles/gameEngine.dir/src/GameState.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gameEngine.dir/src/GameState.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ohuweih/coolName/game_engine/src/GameState.cpp > CMakeFiles/gameEngine.dir/src/GameState.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ohuweih/gameEngine/game_engine/src/GameState.cpp > CMakeFiles/gameEngine.dir/src/GameState.cpp.i
 
 CMakeFiles/gameEngine.dir/src/GameState.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gameEngine.dir/src/GameState.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ohuweih/coolName/game_engine/src/GameState.cpp -o CMakeFiles/gameEngine.dir/src/GameState.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ohuweih/gameEngine/game_engine/src/GameState.cpp -o CMakeFiles/gameEngine.dir/src/GameState.cpp.s
+
+CMakeFiles/gameEngine.dir/src/Renderer.cpp.o: CMakeFiles/gameEngine.dir/flags.make
+CMakeFiles/gameEngine.dir/src/Renderer.cpp.o: ../src/Renderer.cpp
+CMakeFiles/gameEngine.dir/src/Renderer.cpp.o: CMakeFiles/gameEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ohuweih/gameEngine/game_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/gameEngine.dir/src/Renderer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gameEngine.dir/src/Renderer.cpp.o -MF CMakeFiles/gameEngine.dir/src/Renderer.cpp.o.d -o CMakeFiles/gameEngine.dir/src/Renderer.cpp.o -c /home/ohuweih/gameEngine/game_engine/src/Renderer.cpp
+
+CMakeFiles/gameEngine.dir/src/Renderer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gameEngine.dir/src/Renderer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ohuweih/gameEngine/game_engine/src/Renderer.cpp > CMakeFiles/gameEngine.dir/src/Renderer.cpp.i
+
+CMakeFiles/gameEngine.dir/src/Renderer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gameEngine.dir/src/Renderer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ohuweih/gameEngine/game_engine/src/Renderer.cpp -o CMakeFiles/gameEngine.dir/src/Renderer.cpp.s
+
+CMakeFiles/gameEngine.dir/src/Input.cpp.o: CMakeFiles/gameEngine.dir/flags.make
+CMakeFiles/gameEngine.dir/src/Input.cpp.o: ../src/Input.cpp
+CMakeFiles/gameEngine.dir/src/Input.cpp.o: CMakeFiles/gameEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ohuweih/gameEngine/game_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/gameEngine.dir/src/Input.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gameEngine.dir/src/Input.cpp.o -MF CMakeFiles/gameEngine.dir/src/Input.cpp.o.d -o CMakeFiles/gameEngine.dir/src/Input.cpp.o -c /home/ohuweih/gameEngine/game_engine/src/Input.cpp
+
+CMakeFiles/gameEngine.dir/src/Input.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gameEngine.dir/src/Input.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ohuweih/gameEngine/game_engine/src/Input.cpp > CMakeFiles/gameEngine.dir/src/Input.cpp.i
+
+CMakeFiles/gameEngine.dir/src/Input.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gameEngine.dir/src/Input.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ohuweih/gameEngine/game_engine/src/Input.cpp -o CMakeFiles/gameEngine.dir/src/Input.cpp.s
 
 # Object files for target gameEngine
 gameEngine_OBJECTS = \
 "CMakeFiles/gameEngine.dir/src/main.cpp.o" \
-"CMakeFiles/gameEngine.dir/src/GameState.cpp.o"
+"CMakeFiles/gameEngine.dir/src/GameState.cpp.o" \
+"CMakeFiles/gameEngine.dir/src/Renderer.cpp.o" \
+"CMakeFiles/gameEngine.dir/src/Input.cpp.o"
 
 # External object files for target gameEngine
 gameEngine_EXTERNAL_OBJECTS =
 
 gameEngine: CMakeFiles/gameEngine.dir/src/main.cpp.o
 gameEngine: CMakeFiles/gameEngine.dir/src/GameState.cpp.o
+gameEngine: CMakeFiles/gameEngine.dir/src/Renderer.cpp.o
+gameEngine: CMakeFiles/gameEngine.dir/src/Input.cpp.o
 gameEngine: CMakeFiles/gameEngine.dir/build.make
 gameEngine: CMakeFiles/gameEngine.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ohuweih/coolName/game_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable gameEngine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ohuweih/gameEngine/game_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable gameEngine"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gameEngine.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -121,6 +153,6 @@ CMakeFiles/gameEngine.dir/clean:
 .PHONY : CMakeFiles/gameEngine.dir/clean
 
 CMakeFiles/gameEngine.dir/depend:
-	cd /home/ohuweih/coolName/game_engine/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ohuweih/coolName/game_engine /home/ohuweih/coolName/game_engine /home/ohuweih/coolName/game_engine/build /home/ohuweih/coolName/game_engine/build /home/ohuweih/coolName/game_engine/build/CMakeFiles/gameEngine.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ohuweih/gameEngine/game_engine/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ohuweih/gameEngine/game_engine /home/ohuweih/gameEngine/game_engine /home/ohuweih/gameEngine/game_engine/build /home/ohuweih/gameEngine/game_engine/build /home/ohuweih/gameEngine/game_engine/build/CMakeFiles/gameEngine.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/gameEngine.dir/depend
 

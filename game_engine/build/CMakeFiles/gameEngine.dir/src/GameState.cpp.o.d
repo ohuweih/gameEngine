@@ -1,7 +1,7 @@
 CMakeFiles/gameEngine.dir/src/GameState.cpp.o: \
- /home/ohuweih/coolName/game_engine/src/GameState.cpp \
+ /home/ohuweih/gameEngine/game_engine/src/GameState.cpp \
  /usr/include/stdc-predef.h \
- /home/ohuweih/coolName/game_engine/src/GameState.h \
+ /home/ohuweih/gameEngine/game_engine/src/GameState.h \
  /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

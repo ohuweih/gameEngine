@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ohuweih/coolName/game_engine
+CMAKE_SOURCE_DIR = /home/ohuweih/gameEngine/game_engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ohuweih/coolName/game_engine/build
+CMAKE_BINARY_DIR = /home/ohuweih/gameEngine/game_engine/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ohuweih/coolName/game_engine/build/CMakeFiles /home/ohuweih/coolName/game_engine/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ohuweih/gameEngine/game_engine/build/CMakeFiles /home/ohuweih/gameEngine/game_engine/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ohuweih/coolName/game_engine/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ohuweih/gameEngine/game_engine/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -153,6 +153,54 @@ src/GameState.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gameEngine.dir/build.make CMakeFiles/gameEngine.dir/src/GameState.cpp.s
 .PHONY : src/GameState.cpp.s
 
+src/Input.o: src/Input.cpp.o
+.PHONY : src/Input.o
+
+# target to build an object file
+src/Input.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gameEngine.dir/build.make CMakeFiles/gameEngine.dir/src/Input.cpp.o
+.PHONY : src/Input.cpp.o
+
+src/Input.i: src/Input.cpp.i
+.PHONY : src/Input.i
+
+# target to preprocess a source file
+src/Input.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gameEngine.dir/build.make CMakeFiles/gameEngine.dir/src/Input.cpp.i
+.PHONY : src/Input.cpp.i
+
+src/Input.s: src/Input.cpp.s
+.PHONY : src/Input.s
+
+# target to generate assembly for a file
+src/Input.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gameEngine.dir/build.make CMakeFiles/gameEngine.dir/src/Input.cpp.s
+.PHONY : src/Input.cpp.s
+
+src/Renderer.o: src/Renderer.cpp.o
+.PHONY : src/Renderer.o
+
+# target to build an object file
+src/Renderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gameEngine.dir/build.make CMakeFiles/gameEngine.dir/src/Renderer.cpp.o
+.PHONY : src/Renderer.cpp.o
+
+src/Renderer.i: src/Renderer.cpp.i
+.PHONY : src/Renderer.i
+
+# target to preprocess a source file
+src/Renderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gameEngine.dir/build.make CMakeFiles/gameEngine.dir/src/Renderer.cpp.i
+.PHONY : src/Renderer.cpp.i
+
+src/Renderer.s: src/Renderer.cpp.s
+.PHONY : src/Renderer.s
+
+# target to generate assembly for a file
+src/Renderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gameEngine.dir/build.make CMakeFiles/gameEngine.dir/src/Renderer.cpp.s
+.PHONY : src/Renderer.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -189,6 +237,12 @@ help:
 	@echo "... src/GameState.o"
 	@echo "... src/GameState.i"
 	@echo "... src/GameState.s"
+	@echo "... src/Input.o"
+	@echo "... src/Input.i"
+	@echo "... src/Input.s"
+	@echo "... src/Renderer.o"
+	@echo "... src/Renderer.i"
+	@echo "... src/Renderer.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

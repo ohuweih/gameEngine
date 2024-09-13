@@ -1,4 +1,4 @@
-# Install script for directory: /home/ohuweih/coolName/game_engine
+# Install script for directory: /home/ohuweih/gameEngine/game_engine
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ohuweih/coolName/game_engine/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ohuweih/gameEngine/game_engine/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
