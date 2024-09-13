@@ -71,24 +71,33 @@ bool GameState::is_valid_move(int start_row, int start_col, int end_row, int end
 
 // Function for valid or invalid move. This should be broke later in the game for the crazy part of the game
 bool GameState::is_valid_pawn_move(int start_row, int start_col, int end_row, int end_col, const std::string& color) {
-    int direction = (color == "white") ? -1 : 1; // This should make white move up and black move down... Hopefuly lol
+    int direction = (color == "white") ? 1 : -1; // This should make white move up and black move down... Hopefuly lol
+
+    // Ensure the we are with in the bounds of the board
+    if (end_row < 0 || end_row > 7 || end_col < 0 || end_col > 7){
+        return false;
+    }
 
 
     //Pawn move
     if (start_col == end_col && board[end_row][end_col].name == "") {
-        if (end_row == start_row + direction) return true; // Move forward
-        if ((color == "white" && start_row ==6 && end_row ==4) ||
-                (color == "black" && start_row ==1 && end_row ==3)) {
-            return true; // Pawn two space start move
+        if (end_row == start_row + direction) {
+            return true; // Move forward
+        }
+
+        
+        if ((color == "white" && start_row == 1 && end_row == 3 && board[2][end_col].name == "" ) ||
+            (color == "black" && start_row == 6 && end_row == 4 && board[5][end_col].name =="" )) {
+            return true; // Pawn two space start move if both spaces are clear. 
         }
     }
 
 
     // Pawn Capture
     if (std::abs(start_col - end_col) == 1 && end_row == start_row + direction) {
-            if (board[end_row][end_col].name != "" && board[end_row][end_col].color != color) {
+        if (board[end_row][end_col].name != "" && board[end_row][end_col].color != color) {
             return true;
-            }
+        }
     }
 
     return false;
