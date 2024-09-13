@@ -42,7 +42,7 @@ class GameState {
 
         
         // Function for pawn movement
-        bool is_valid_move(int start_row, int start_col, int end_row, int end_col)
+        bool is_valid_move(int start_row, int start_col, int end_row, int end_col);
 
 
         // Function to handle game logic (e.g., updating turns, selecting pieces)
