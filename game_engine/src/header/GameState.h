@@ -40,6 +40,10 @@ class GameState {
         // Function to display the chess board in the console (for debugging)
         void display_board();
 
+        
+        // Function for pawn movement
+        bool is_valid_move(int start_row, int start_col, int end_row, int end_col)
+
 
         // Function to handle game logic (e.g., updating turns, selecting pieces)
         void update_game_logic(std::string& piece_name, std::string& action);

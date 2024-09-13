@@ -43,6 +43,80 @@ void GameState::place_major_pieces(int row, const std::string& color) {
 }
 
 
+// validate a move based on miece movement rules
+bool GameState::is_valid_move(int start_row, int start_col, int end_row int end_col) {
+    GameEntity piece = board[start_row][start_col];
+    if (piece.name == "") {
+        std::cout << "No piece at the selected position!" << std::endl;
+        return false;
+    }
+
+    if (piece.name == "Pawn") {
+        return is_valid_pawn_move(start_row, start_col, end_row, end_col, piece.color);
+    } else if (piece.name == "Rook") {
+        return is_valid_rook_move(start_row, start_col, end_row, end_col);
+    } else if (piece.name == "Knight") {
+        return is_valid_knight_move(start_row, start_col, end_row, end_col);
+    } else if (piece.name == "Bishop") {
+        return is_valid_bishop_move(start_row, start_col, end_row, end_col);
+    } else if (piece.name == "Queen") {
+        return is_valid_queen_move(start_row, start_col, end_row, end_col);
+    } else if (piece.name == "King") {
+        return is_valid_king_move(start_row, start_col, end_row, end_col);
+    }
+
+    return false;
+}
+
+
+// Function for valid or invalid move. This should be broke later in the game for the crazy part of the game
+bool GameState::is_valid_pawn_move(int start_row, int start_col, int end_row, int end_col, const std::string& color) {
+    int direction = (color == "white") ? -1 : 1; // This should make white move up and black move down... Hopefuly lol
+
+
+    //Pawn move
+    if (start_col == end_col && board[end_row][end_col].name == "") {
+        if (end_row == start_row + direction) return true; // Move forward
+        if ((color == "white" && start_row ==6 && end_row ==4) ||
+                (color == "black" && start_row ==1 && end_row ==3)) {
+            return true; // Pawn two space start move
+        }
+    }
+
+
+    // Pawn Capture
+    if (std::abs(start_col - end_col) == 1 && end_row == start_row + direction) {
+            if (board[end_row][end_col].name != "" && board[end_row][end_col].color != color) {
+            return true;
+            }
+    }
+
+    return false;
+}
+
+
+// Rook move
+bool GameState::is_valid_rook_move(int start_row, int start_col, int end_row, int end_col) {
+    if (start_row != end_row && start_col != end_col) {
+            return false;
+    }
+
+    //check if path is clear
+    if (start_row == end_row {
+        int step = (start_col < end_col) ? 1 : -1;
+        for (int col = start_col + step; col != end_col; col += step) {
+            if (board[start_row][col.name] != "") return false; //Blocked
+        }
+    } else {
+        int step = (start_row < end_row) ? 1 : -1;
+        for (int row = start_row + step; row != end_row; row += step) {
+            if (board[row][start_col].name ! "") return false; //Blocked again
+        }
+    }
+
+    return true;
+}
+
 // Function to display the current board state
 void GameState::display_board() {
     std::cout << "Current Board State:" << std::endl;
@@ -58,6 +132,7 @@ void GameState::display_board() {
         std::cout << std::endl;
     }
 }
+
 
 // Function to handle game logic (simulating user input)
 void GameState::update_game_logic(std::string& piece_name, std::string& action) {
@@ -75,6 +150,7 @@ void GameState::update_game_logic(std::string& piece_name, std::string& action) 
         current_player = "White";
     }
 }
+
 
 // Function to get the piece at a specific board position
 GameEntity GameState::get_piece_at(int row, int col) const {
