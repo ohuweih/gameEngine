@@ -74,12 +74,13 @@ int main(int argc, char* argv[]) {
                         }
                     } else {
                         // Valid move logic here
+                        GameEntity selected_piece = game_state.get_piece_at(selected_row, selected_col);
                         if (game_state.is_valid_move(selected_row, selected_col, row, col)) {
                         // Move the selected piece to the new position
                             game_state.board[row][col] = game_state.board[selected_row][selected_col];
                             game_state.board[selected_row][selected_col] = GameEntity("", "empty", "");
                         } else {
-                            std::cout << "Invalid move!" << std::endl;
+                            std::cout << "Invalid move for "  << selected_piece.name << " from ("  << selected_row << "," << selected_col << ") to (" << row << "," << col << ")!" <<std::endl;
                         }
 
                         // Reset selection

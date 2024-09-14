@@ -19,12 +19,12 @@ void GameState::initialize_board() {
     
     // Place all pawns
     for (int i = 0; i < 8; ++i) {
-        board[1][i] = GameEntity("Pawn", "piece", "white");
-        board[6][i] = GameEntity("Pawn", "piece", "black");
+        board[6][i] = GameEntity("Pawn", "piece", "white");
+        board[1][i] = GameEntity("Pawn", "piece", "black");
     }
 
-    place_major_pieces(0,"white"); // The function for this is below, starts on line 30 
-    place_major_pieces(7, "black");
+    place_major_pieces(7,"white"); // The function for this is below, starts on line 30 
+    place_major_pieces(0, "black");
 }
 
 
@@ -71,7 +71,7 @@ bool GameState::is_valid_move(int start_row, int start_col, int end_row, int end
 
 // Function for valid or invalid move. This should be broke later in the game for the crazy part of the game
 bool GameState::is_valid_pawn_move(int start_row, int start_col, int end_row, int end_col, const std::string& color) {
-    int direction = (color == "white") ? 1 : -1; // This should make white move up and black move down... Hopefuly lol
+    int direction = (color == "white") ? -1 : 1; // This should make white move up and black move down... Hopefuly lol
 
     // Ensure the we are with in the bounds of the board
     if (end_row < 0 || end_row > 7 || end_col < 0 || end_col > 7){
@@ -86,8 +86,8 @@ bool GameState::is_valid_pawn_move(int start_row, int start_col, int end_row, in
         }
 
         
-        if ((color == "white" && start_row == 1 && end_row == 3 && board[2][end_col].name == "" ) ||
-            (color == "black" && start_row == 6 && end_row == 4 && board[5][end_col].name =="" )) {
+        if ((color == "white" && start_row == 6 && end_row == 4 && board[5][end_col].name == "" ) ||
+            (color == "black" && start_row == 1 && end_row == 3 && board[2][end_col].name =="" )) {
             return true; // Pawn two space start move if both spaces are clear. 
         }
     }
