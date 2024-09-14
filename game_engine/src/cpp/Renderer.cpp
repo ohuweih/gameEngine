@@ -10,7 +10,7 @@ void render_chessboard(SDL_Renderer* renderer) {
         for (int col = 0; col < BOARD_SIZE; ++col) {
             // Alternate between light and dark tiles
             if ((row + col) % 2 == 0) {
-                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);  // Light color
+                SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);  // Light color
             } else {
                 SDL_SetRenderDrawColor(renderer, 128, 128, 128, 255);  // Dark color
             }
