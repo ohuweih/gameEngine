@@ -3,7 +3,7 @@
 #include "header/GameState.h"
 #include "header/Renderer.h"
 #include "header/Input.h"
-
+#include "header/PieceMovement.h"
 
 int main(int argc, char* argv[]) {
     // Initialize SDL with video subsystem
@@ -38,6 +38,7 @@ int main(int argc, char* argv[]) {
 
     // Initialize Game
     GameState game_state;
+    PieceMovement piece_movement;
 
 
     // Main game loop flag to check if the program is running
@@ -75,7 +76,7 @@ int main(int argc, char* argv[]) {
                     } else {
                         // Valid move logic here
                         GameEntity selected_piece = game_state.get_piece_at(selected_row, selected_col);
-                        if (game_state.is_valid_move(selected_row, selected_col, row, col)) {
+                        if (piece_movement.is_valid_move(game_state, selected_row, selected_col, row, col)) {
                         // Move the selected piece to the new position
                             game_state.board[row][col] = game_state.board[selected_row][selected_col];
                             game_state.board[selected_row][selected_col] = GameEntity("", "empty", "");

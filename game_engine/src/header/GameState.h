@@ -48,18 +48,8 @@ class GameState {
         GameEntity get_piece_at(int row, int col) const;
 
 
-        // Function for movement
-        bool is_valid_move(int start_row, int start_col, int end_row, int end_col);
-
-
     private:
         // Functions called with in the GameState cpp
-    	bool is_valid_pawn_move(int start_row, int start_col, int end_row, int end_col, const std::string& color);
-    	bool is_valid_rook_move(int start_row, int start_col, int end_row, int end_col);
-    	bool is_valid_knight_move(int start_row, int start_col, int end_row, int end_col);
-    	bool is_valid_bishop_move(int start_row, int start_col, int end_row, int end_col);
-    	bool is_valid_queen_move(int start_row, int start_col, int end_row, int end_col);
-    	bool is_valid_king_move(int start_row, int start_col, int end_row, int end_col);
     	void place_major_pieces(int row, const std::string& color);
 
 };
