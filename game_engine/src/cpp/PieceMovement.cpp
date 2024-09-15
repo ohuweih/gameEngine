@@ -150,5 +150,64 @@ bool PieceMovement::is_valid_king_move(GameState& game_state, int start_row, int
         return true;
     }
 
+
+    // Casting logic
+    if (row_diff == 0 && col_diff == 2) { // King moves two squares
+        if (game_state.current_player == "white" && !game_state.white_king_moved) {
+            // Kingside castling
+            if (end_col == 6 && !game_state.white_rook_king_side_moved &&
+                game_state.board[7][5].name == "" && game_state.board[7][6].name =="")
+                // Ensure king doesn't pass through attacked squares or end in check
+                if (!game_state.is_square_attacked(7, 4, "black") &&
+                    !game_state.is_square_attacked(7, 5, "black") &&
+                    !game_state.is_square_attacked(7, 6, "black")) {
+                    // Perform castling by moving the rook
+                    game_state.board[7][5] = game_state.board[7][7];
+                    game_state.board[7][7] = GameEntity("", "empty", "");
+                    return true;
+                    }
+        }
+
+
+        // queenside castling
+        if (end_col == 2 && !game_state.white_rook_queen_side_moved && game_state.board[7][1].name == "" && game_state.board[7][2].name == "" && game_state.board[7][3].name == ""){
+            if (!game_state.is_square_attacked(7, 4, "black") &&
+                !game_state.is_square_attacked(7, 3, "black") &&
+                !game_state.is_square_attacked(7, 2, "black")) {
+                game_state.board[7][3] = game_state.board[7][0];
+                game_state.board[7][0] = GameEntity("", "empty", "");
+                return true;
+            }
+        }
+    }
+
+
+        if (game_state.current_player == "black" && !game_state.black_king_moved) {
+        // Kingside castling
+            if (end_col == 6 && !game_state.black_rook_king_side_moved && game_state.board[0][5].name == "" && game_state.board[0][6].name == "") {
+                if (!game_state.is_square_attacked(0, 4, "white") &&
+                    !game_state.is_square_attacked(0, 5, "white") &&
+                    !game_state.is_square_attacked(0, 6, "white")) {
+                    // Perform castling by moving the rook
+                    game_state.board[0][5] = game_state.board[0][7];
+                    game_state.board[0][7] = GameEntity("", "empty", "");
+                    return true;
+                }
+            }
+            // Queenside castling
+            if (end_col == 2 && !game_state.black_rook_queen_side_moved && game_state.board[0][1].name == "" && game_state.board[0][2].name == "" && game_state.board[0][3].name == "") {
+                if (!game_state.is_square_attacked(0, 4, "white") &&
+                    !game_state.is_square_attacked(0, 3, "white") &&
+                    !game_state.is_square_attacked(0, 2, "white")) {
+                    // Perform castling by moving the rook
+                    game_state.board[0][3] = game_state.board[0][0];
+                    game_state.board[0][0] = GameEntity("", "empty", "");
+                    return true;
+                }
+            }
+        }
+    }
+
+ 
     return false;
 }
