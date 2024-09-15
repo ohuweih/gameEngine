@@ -26,14 +26,23 @@ class GameState {
         std::vector<std::vector<GameEntity>> board;
 
 
+        //Track whether the king or rook have moved for castling
+        bool white_king_moved = false;
+        bool white_rook_king_side_moved = false;
+        bool white_rook_queen_side_moved = false;
+
+
+        bool black_king_moved = false;
+        bool black_rook_king_side_moved = false;
+        bool black_rook_queen_side_moved = false;
+
+
         // Constructor
         GameState();
 
 
         // Function to initialize the chess board
         void initialize_board();
-
-
 
 
         // Function to display the chess board in the console (for debugging)
@@ -47,6 +56,9 @@ class GameState {
         // Function to get the piece at a specific board position
         GameEntity get_piece_at(int row, int col) const;
 
+
+        // add methof to check if a square is attacked
+        bool is_square_attacked(int row, int col, const std::string& color);
 
     private:
         // Functions called with in the GameState cpp
