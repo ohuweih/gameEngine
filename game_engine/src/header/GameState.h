@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "ChessPiece.h"
 
 // Declaration of Game Entity class
 class GameEntity {
@@ -22,7 +23,7 @@ class GameState {
     public:
         // Functions called from main cpp
         std::string current_player;
-        std::vector<std::vector<GameEntity>> board;
+        std::vector<std::vector<ChessPiece*>> board;
 
 
         //Track whether the king or rook have moved for castling
@@ -44,6 +45,12 @@ class GameState {
         void initialize_board();
 
 
+        ChessPiece* get_piece_at(int row, int col) const {
+            return board[row][col];
+        }
+
+		void move_piece(int start_row, int start_col, int end_row, int end_col);
+
         // Function to display the chess board in the console (for debugging)
         void display_board();
 
@@ -51,14 +58,10 @@ class GameState {
         // Function to handle game logic (e.g., updating turns, selecting pieces)
         void update_game_logic(std::string& piece_name, std::string& action);
 
-
-        // Function to get the piece at a specific board position
-        GameEntity get_piece_at(int row, int col) const;
-
     private:
         // Functions called with in the GameState cpp
     	void place_major_pieces(int row, const std::string& color);
-
+    
 };
 
 

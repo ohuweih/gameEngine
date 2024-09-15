@@ -3,8 +3,7 @@
 #include "header/GameState.h"
 #include "header/Renderer.h"
 #include "header/Input.h"
-#include "header/PieceMovement.h"
-
+#include "header/ChessPiece.h"
 int main(int argc, char* argv[]) {
     // Initialize SDL with video subsystem
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -38,7 +37,6 @@ int main(int argc, char* argv[]) {
 
     // Initialize Game
     GameState game_state;
-    PieceMovement piece_movement;
 
 
     // Main game loop flag to check if the program is running
@@ -67,21 +65,21 @@ int main(int argc, char* argv[]) {
                 if (get_board_coordinates(mouse_x, mouse_y, row, col)) {
                     if (!piece_selected) {
                         // Select a piece
-                        GameEntity piece = game_state.get_piece_at(row, col);
-                        if (piece.name != "") {
+                        ChessPiece* piece = game_state.get_piece_at(row, col);
+                        if (piece && piece-> name != "") { // Using -> for accessing class members
                             piece_selected = true;
                             selected_row = row;
                             selected_col = col;
                         }
                     } else {
                         // Valid move logic here
-                        GameEntity selected_piece = game_state.get_piece_at(selected_row, selected_col);
-                        if (piece_movement.is_valid_move(game_state, selected_row, selected_col, row, col)) {
+                        ChessPiece* selected_piece = game_state.get_piece_at(selected_row, selected_col);
+                        if (selected_piece && selected_piece->is_valid_move(game_state, selected_row, selected_col, row, col)) {
                         // Move the selected piece to the new position
-                            game_state.board[row][col] = game_state.board[selected_row][selected_col];
-                            game_state.board[selected_row][selected_col] = GameEntity("", "empty", "");
+                            game_state.move_piece(selected_row, selected_col, row, col);
                         } else {
-                            std::cout << "Invalid move for "  << selected_piece.name << " from ("  << selected_row << "," << selected_col << ") to (" << row << "," << col << ")!" <<std::endl;
+                            std::cout << "Invalid move for " << selected_piece->name << " from (" << selected_row << "," << selected_col << ") to (" << row << "," << col << ")!" << std::endl;
+
                         }
 
                         // Reset selection

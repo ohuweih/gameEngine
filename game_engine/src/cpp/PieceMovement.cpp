@@ -6,16 +6,22 @@ bool PieceMovement::is_square_attacked(GameState& game_state, int row, int col, 
     for (int r = 0; r < 8; ++r) {
         for (int c = 0; c < 8; ++c) {
             GameEntity piece = game_state.board[r][c];
-            if (piece.color != color && piece.name != "") {
-                // Check if the piece can move to the given square
-                if (is_valid_move(game_state, r,c, row, col)) {
-                    return true;
-                }
+
+            // Skip checking if the piece is the same color or checking the current square
+            if (piece.color == color || (r == row && c == col)) {
+                continue;
+            }
+
+            // Check if the piece can move to the given square
+            if (is_valid_move(game_state, r, c, row, col)) {
+                std::cout << "Piece " << piece.name << piece.color << " at (" << r << "," << c << ") is attacking (" << row << "," << col << ")" << std::endl;
+                return true;
             }
         }
     }
     return false;
 }
+
 // validate a move based on miece movement rules
 bool PieceMovement::is_valid_move(GameState& game_state, int start_row, int start_col, int end_row, int end_col) {
     GameEntity piece = game_state.board[start_row][start_col];
@@ -27,13 +33,13 @@ bool PieceMovement::is_valid_move(GameState& game_state, int start_row, int star
 
     
     // Ensure that a piece cannot capture a piece of the same color
-    bool capture_own_piece = false; 
-    if (capture_own_piece == false) {
-        if (target_piece.name != "" && target_piece.color == piece.color) {
-            std::cout << "Cannot capture your own piece!" << std::endl;
-            return false;
-        }
-    }
+    // bool capture_own_piece = true; 
+    //if (capture_own_piece == false) {
+    if (target_piece.color == piece.color) {
+                std::cout << "Invalid move: cannot attack your own piece at (" 
+                                      << end_row << "," << end_col << ")" << std::endl;
+                        return false;
+                            }
 
 
     if (piece.name == "Pawn") {
@@ -156,6 +162,13 @@ bool PieceMovement::is_valid_queen_move(GameState& game_state, int start_row, in
 
 // King move
 bool PieceMovement::is_valid_king_move(GameState& game_state, int start_row, int start_col, int end_row, int end_col) {
+    std::cout << "Current player: " << game_state.current_player << std::endl;
+    std::cout << "White King moved: " << game_state.white_king_moved << std::endl;
+    std::cout << "White Kingside Rook moved: " << game_state.white_rook_king_side_moved << std::endl;
+    std::cout << "Space at (7,5): " << game_state.board[7][5].name << std::endl;
+    std::cout << "Space at (7,6): " << game_state.board[7][6].name << std::endl;
+    std::cout << "Is square (7,4) attacked: " << is_square_attacked(game_state, 7, 4, "black") << std::endl;
+
     int row_diff = std::abs(start_row - end_row);
     int col_diff = std::abs(start_col - end_col);
 

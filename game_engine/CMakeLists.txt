@@ -14,7 +14,7 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_Include_DIRS})
 
 # Add the executable
-add_executable(gameEngine src/main.cpp src/cpp/GameState.cpp src/cpp/Renderer.cpp src/cpp/Input.cpp src/cpp/PieceMovement.cpp)
+add_executable(gameEngine src/main.cpp src/cpp/GameState.cpp src/cpp/Input.cpp src/cpp/Renderer.cpp src/cpp/Pawn.cpp src/cpp/Rook.cpp src/cpp/Bishop.cpp src/cpp/Queen.cpp src/cpp/King.cpp src/cpp/Knight.cpp )
 
 # Link SDL2 to the executable
 target_link_libraries(gameEngine ${SDL2_LIBRARIES})

@@ -24,9 +24,9 @@ void render_chessboard(SDL_Renderer* renderer) {
 void render_pieces(SDL_Renderer* renderer, const GameState& game_state) {
     for (int row = 0; row < BOARD_SIZE; ++row) {
         for (int col = 0; col < BOARD_SIZE; ++col) {
-            GameEntity piece = game_state.get_piece_at(row, col);
-            if (piece.name != "") {
-                if (piece.color == "white") {
+            ChessPiece* piece = game_state.get_piece_at(row, col);
+            if (piece != nullptr){
+                if (piece->get_color() == "white") {
                     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);  // White pieces
                 } else {
                     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);        // Black pieces
