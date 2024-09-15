@@ -5,10 +5,22 @@
 // validate a move based on miece movement rules
 bool PieceMovement::is_valid_move(GameState& game_state, int start_row, int start_col, int end_row, int end_col) {
     GameEntity piece = game_state.board[start_row][start_col];
+    GameEntity target_piece = game_state.get_piece_at(end_row, end_col);
     if (piece.name == "") {
         std::cout << "No piece at the selected position!" << std::endl;
         return false;
     }
+
+    
+    // Ensure that a piece cannot capture a piece of the same color
+    bool capture_own_piece = false; 
+    if (capture_own_piece == false) {
+        if (target_piece.name != "" && target_piece.color == piece.color) {
+            std::cout << "Cannot capture your own piece!" << std::endl;
+            return false;
+        }
+    }
+
 
     if (piece.name == "Pawn") {
         return is_valid_pawn_move(game_state, start_row, start_col, end_row, end_col, piece.color);
