@@ -12,6 +12,7 @@ class PieceMovement {
 
     private:
         // Functions called with in the PieceMovement cpp
+        bool is_square_attacked(GameState& game_state, int row, int col, const std::string& color);
         bool is_valid_pawn_move(GameState& game_state, int start_row, int start_col, int end_row, int end_col, const std::string& color);
         bool is_valid_rook_move(GameState& game_state, int start_row, int start_col, int end_row, int end_col);
         bool is_valid_knight_move(GameState& game_state, int start_row, int start_col, int end_row, int end_col);

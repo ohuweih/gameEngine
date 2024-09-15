@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "PieceMovement.h"
 
 // Declaration of Game Entity class
 class GameEntity {
@@ -55,10 +54,6 @@ class GameState {
 
         // Function to get the piece at a specific board position
         GameEntity get_piece_at(int row, int col) const;
-
-
-        // add methof to check if a square is attacked
-        bool is_square_attacked(int row, int col, const std::string& color, PieceMovement& piece_movement);
 
     private:
         // Functions called with in the GameState cpp

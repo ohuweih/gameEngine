@@ -1,8 +1,21 @@
 #include "../header/PieceMovement.h"
-#include "../header/GameState.h"
 #include <iostream>
 
-
+bool PieceMovement::is_square_attacked(GameState& game_state, int row, int col, const std::string& color) {
+    // Check if any piece of the opposite color can attack this square
+    for (int r = 0; r < 8; ++r) {
+        for (int c = 0; c < 8; ++c) {
+            GameEntity piece = game_state.board[r][c];
+            if (piece.color != color && piece.name != "") {
+                // Check if the piece can move to the given square
+                if (is_valid_move(game_state, r,c, row, col)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 // validate a move based on miece movement rules
 bool PieceMovement::is_valid_move(GameState& game_state, int start_row, int start_col, int end_row, int end_col) {
     GameEntity piece = game_state.board[start_row][start_col];
@@ -159,9 +172,9 @@ bool PieceMovement::is_valid_king_move(GameState& game_state, int start_row, int
                 game_state.board[7][5].name == "" && game_state.board[7][6].name == "") {
                 
                 // Ensure king doesn't pass through attacked squares or end in check
-                if (!game_state.is_square_attacked(7, 4, "black") &&
-                    !game_state.is_square_attacked(7, 5, "black") &&
-                    !game_state.is_square_attacked(7, 6, "black")) {
+                if (!is_square_attacked(game_state, 7, 4, "black") &&
+                    !is_square_attacked(game_state, 7, 5, "black") &&
+                    !is_square_attacked(game_state, 7, 6, "black")) {
                     
                     // Perform castling by moving the rook
                     game_state.board[7][5] = game_state.board[7][7];
@@ -174,9 +187,9 @@ bool PieceMovement::is_valid_king_move(GameState& game_state, int start_row, int
             if (end_col == 2 && !game_state.white_rook_queen_side_moved &&
                 game_state.board[7][1].name == "" && game_state.board[7][2].name == "" && game_state.board[7][3].name == "") {
                 
-                if (!game_state.is_square_attacked(7, 4, "black") &&
-                    !game_state.is_square_attacked(7, 3, "black") &&
-                    !game_state.is_square_attacked(7, 2, "black")) {
+                if (!is_square_attacked(game_state, 7, 4, "black") &&
+                    !is_square_attacked(game_state, 7, 3, "black") &&
+                    !is_square_attacked(game_state, 7, 2, "black")) {
                     
                     game_state.board[7][3] = game_state.board[7][0];
                     game_state.board[7][0] = GameEntity("", "empty", "");
@@ -190,9 +203,9 @@ bool PieceMovement::is_valid_king_move(GameState& game_state, int start_row, int
             if (end_col == 6 && !game_state.black_rook_king_side_moved &&
                 game_state.board[0][5].name == "" && game_state.board[0][6].name == "") {
                 
-                if (!game_state.is_square_attacked(0, 4, "white") &&
-                    !game_state.is_square_attacked(0, 5, "white") &&
-                    !game_state.is_square_attacked(0, 6, "white")) {
+                if (!is_square_attacked(game_state, 0, 4, "white") &&
+                    !is_square_attacked(game_state, 0, 5, "white") &&
+                    !is_square_attacked(game_state, 0, 6, "white")) {
                     
                     // Perform castling by moving the rook
                     game_state.board[0][5] = game_state.board[0][7];
@@ -205,9 +218,9 @@ bool PieceMovement::is_valid_king_move(GameState& game_state, int start_row, int
             if (end_col == 2 && !game_state.black_rook_queen_side_moved &&
                 game_state.board[0][1].name == "" && game_state.board[0][2].name == "" && game_state.board[0][3].name == "") {
                 
-                if (!game_state.is_square_attacked(0, 4, "white") &&
-                    !game_state.is_square_attacked(0, 3, "white") &&
-                    !game_state.is_square_attacked(0, 2, "white")) {
+                if (!is_square_attacked(game_state, 0, 4, "white") &&
+                    !is_square_attacked(game_state, 0, 3, "white") &&
+                    !is_square_attacked(game_state, 0, 2, "white")) {
                     
                     game_state.board[0][3] = game_state.board[0][0];
                     game_state.board[0][0] = GameEntity("", "empty", "");
