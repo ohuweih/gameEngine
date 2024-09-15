@@ -83,3 +83,19 @@ GameEntity GameState::get_piece_at(int row, int col) const {
     return board[row][col];
 }
 
+
+bool GameState::is_square_attacked(int row, int col, const std::string& color, PieceMovement& piece_movement) {
+    // Check if any piece of the opposite color can attack this square
+    for (int r = 0; r < 8; ++r) {
+        for (int c = 0; c < 8; ++c) {
+            GameEntity piece = board[r][c];
+            if (piece.color != color && piece.name != "") {
+                // Check if the piece can move to the given square
+                if (piece_movement.is_valid_move(*this, r,c, row, col)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}

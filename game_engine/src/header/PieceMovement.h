@@ -1,6 +1,6 @@
 #ifndef PIECEMOVEMENT_H
 #define PIECEMOVEMENT_H
-
+#include <string>
 #include "GameState.h"
 
 class PieceMovement {

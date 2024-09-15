@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include "PieceMovement.h"
 
 // Declaration of Game Entity class
 class GameEntity {
@@ -58,7 +58,7 @@ class GameState {
 
 
         // add methof to check if a square is attacked
-        bool is_square_attacked(int row, int col, const std::string& color);
+        bool is_square_attacked(int row, int col, const std::string& color, PieceMovement& piece_movement);
 
     private:
         // Functions called with in the GameState cpp
