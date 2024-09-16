@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
                 if (get_board_coordinates(mouse_x, mouse_y, row, col)) {
                     if (!piece_selected) {
                         // Select a piece
-                        ChessPiece* piece = game_state.get_piece_at(row, col);
+                        ChessPiece* piece = game_state.get_piece_at(row, col).get();
                         if (piece && piece-> name != "") { // Using -> for accessing class members
                             piece_selected = true;
                             selected_row = row;
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
                         }
                     } else {
                         // Valid move logic here
-                        ChessPiece* selected_piece = game_state.get_piece_at(selected_row, selected_col);
+                        ChessPiece* selected_piece = game_state.get_piece_at(selected_row, selected_col).get();
                         if (selected_piece && selected_piece->is_valid_move(game_state, selected_row, selected_col, row, col)) {
                         // Move the selected piece to the new position
                             game_state.move_piece(selected_row, selected_col, row, col);

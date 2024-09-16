@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 #include "ChessPiece.h"
 
 // Declaration of Game Entity class
@@ -23,7 +24,7 @@ class GameState {
     public:
         // Functions called from main cpp
         std::string current_player;
-        std::vector<std::vector<ChessPiece*>> board;
+        std::vector<std::vector<std::unique_ptr<ChessPiece>>> board;
 
 
         //Track whether the king or rook have moved for castling
@@ -45,7 +46,7 @@ class GameState {
         void initialize_board();
 
 
-        ChessPiece* get_piece_at(int row, int col) const {
+        std::unique_ptr<ChessPiece>& get_piece_at(int row, int col) {
             return board[row][col];
         }
 

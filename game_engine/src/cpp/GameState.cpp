@@ -7,11 +7,8 @@
 #include "../header/Queen.h"
 #include "../header/King.h"
 #include <iostream>
+#include <memory>
 
-
-// Constructor implementation for GameEntity
-GameEntity::GameEntity(std::string n, std::string t, std::string c)
-    : name(n), type(t), color(c) {}
 
 // Constructor for GameState
 GameState::GameState() {
@@ -22,12 +19,12 @@ GameState::GameState() {
 
 // Function to set up the chess board
 void GameState::initialize_board() {
-    board = std::vector<std::vector<ChessPiece*>>(8, std::vector<ChessPiece*>(8, nullptr));
+    board = std::vector<std::vector<std::unique_ptr<ChessPiece>>>(8, std::vector<std::unique_ptr<ChessPiece>>(8, nullptr));
     
     // Place all pawns
     for (int i = 0; i < 8; ++i) {
-        board[6][i] = new Pawn("white");
-        board[1][i] = new Pawn("black");
+        board[6][i] = std::make_unique<Pawn>("white");
+        board[1][i] = std::make_unique<Pawn>("black");
     }
 
     place_major_pieces(7,"white"); // The function for this is below, starts on line 30 
@@ -38,14 +35,14 @@ void GameState::initialize_board() {
 // Function to place major pieces
 void GameState::place_major_pieces(int row, const std::string& color) {
     // Place white major pieces
-    board[row][0] = new Rook(color);
-    board[row][1] = new Knight(color);
-    board[row][2] = new Bishop(color);
-    board[row][3] = new Queen(color);
-    board[row][4] = new King(color);
-    board[row][5] = new Bishop(color);
-    board[row][6] = new Knight(color);
-    board[row][7] = new Rook(color);
+    board[row][0] = std::make_unique<Rook>(color);
+    board[row][1] = std::make_unique<Knight>(color);
+    board[row][2] = std::make_unique<Bishop>(color);
+    board[row][3] = std::make_unique<Queen>(color);
+    board[row][4] = std::make_unique<King>(color);
+    board[row][5] = std::make_unique<Bishop>(color);
+    board[row][6] = std::make_unique<Knight>(color);
+    board[row][7] = std::make_unique<Rook>(color);
 
 }
 
@@ -55,8 +52,8 @@ void GameState::display_board() {
     std::cout << "Current Board State:" << std::endl;
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
-            ChessPiece* entity = board[row][col];
-            if (entity->name != "") {
+            ChessPiece* entity = board[row][col].get();
+            if (entity) {
                 std::cout << entity->color[0] << entity->name[0] << " ";  // Print color and piece type
             } else {
                 std::cout << "-- ";
@@ -77,22 +74,16 @@ void GameState::update_game_logic(std::string& piece_name, std::string& action) 
     std::cin >> action;
 
     // Switch player
-    if (current_player == "White") {
-        current_player = "Black";
+    if (current_player == "white") {
+        current_player = "black";
     } else {
-        current_player = "White";
+        current_player = "white";
     }
 }
 
 
 void GameState::move_piece(int start_row, int start_col, int end_row, int end_col) {
-    board[end_row][end_col] = board[start_row][start_col];
-    board[start_row][start_col] = nullptr;
+    board[end_row][end_col] = std::move(board[start_row][start_col]);
+    board[start_row][start_col].reset();
 }
-
-// Function to get the piece at a specific board position
-//ChessPiece* GameState::get_piece_at(int row, int col) const {
-//    return board[row][col];
-//}
-
 
