@@ -5,18 +5,77 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "ChessPiece.h"
 
-// Declaration of Game Entity class
-class GameEntity {
-    public:
-        std::string name;
-        std::string type;
-        std::string color;
-
-        // Constructor
-        GameEntity(std::string n = "", std::string t = "empty", std::string c = "");
+enum class Color{
+    White,
+    Black
 };
+
+
+class Piece {
+    protected:
+        Color color; // The color of the piece
+
+
+    public:
+        Piece(Color c) : color(c){}
+
+        virtual ~Piece() = default;
+        virtual bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) = 0; // "common" method for all pieces This is a pure virtual placeholder
+        virtual char getName() const = 0; // Each piece can have its own name
+        Color getColor() const { return color; } 
+};
+
+
+class Pawn : public Piece {
+    public:
+        Pawn(Color c) : Piece(c) {}
+        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;
+        char getName() const override;
+};
+
+
+class Rook : public Piece {
+    public:
+        Rook(Color c) : Piece(c) {}
+        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
+        char getName() const override;  // Declaration of getName
+};
+
+
+class Knight : public Piece {
+    public:
+        Knight(Color c) : Piece(c) {}
+        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
+        char getName() const override;  // Declaration of getName
+};
+
+
+
+class Bishop : public Piece {
+    public:
+        Bishop(Color c) : Piece(c) {}
+        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
+        char getName() const override;  // Declaration of getName
+};
+
+
+class Queen : public Piece {
+    public:
+        Queen(Color c) : Piece(c) {}
+        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
+        char getName() const override;  // Declaration of getName
+};
+
+
+class King : public Piece {
+    public:
+        King(Color c) : Piece(c) {}
+        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
+        char getName() const override;  // Declaration of getName
+};
+
+
 
 
 // Declaration of GameState class
@@ -24,36 +83,17 @@ class GameState {
     public:
         // Functions called from main cpp
         std::string current_player;
-        std::vector<std::vector<std::unique_ptr<ChessPiece>>> board;
-
-
-        //Track whether the king or rook have moved for castling
-        bool white_king_moved = false;
-        bool white_rook_king_side_moved = false;
-        bool white_rook_queen_side_moved = false;
-
-
-        bool black_king_moved = false;
-        bool black_rook_king_side_moved = false;
-        bool black_rook_queen_side_moved = false;
+        std::vector<std::vector<Piece*>> board;
 
 
         // Constructor
-        GameState();
+        GameState(); 
+        ~GameState(); //Destructor
 
-
-        // Function to initialize the chess board
-        void initialize_board();
-
-
-        std::unique_ptr<ChessPiece>& get_piece_at(int row, int col) {
-            return board[row][col];
-        }
-
-		void move_piece(int start_row, int start_col, int end_row, int end_col);
+//	    bool move_piece(int start_row, int start_col, int end_row, int end_col);
 
         // Function to display the chess board in the console (for debugging)
-        void display_board();
+        void display_board() const;
 
         
         // Function to handle game logic (e.g., updating turns, selecting pieces)
@@ -62,6 +102,7 @@ class GameState {
     private:
         // Functions called with in the GameState cpp
     	void place_major_pieces(int row, const std::string& color);
+        void initialize_board();
     
 };
 
