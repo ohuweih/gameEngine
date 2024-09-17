@@ -89,22 +89,3 @@ void GameState::update_game_logic(std::string& piece_name, std::string& action) 
         current_player = "White";
     }
 }
-
-
-// Function to move pieces using std::move()
-//bool GameState::move_piece(int start_row, int start_col, int end_row, int end_col) {
-//    if(!board[start_row][start_col]) { 
-//        std::cout << "No piece at the start position!" << std::endl;
-//        return false; // No piece to move
-//    }
-//
-    // Perform move and transfer ownership using std::move
-//    if (board[start_row][start_col]->move(start_row, start_col, end_row, end_col, board)) {
-//        board[end_row][end_col] = std::move(board[start_row][start_col]); // Move Piece
-//        board[start_row][start_col] = nullptr; // Empty the starting position
-//        return true;
-//    } else {
-//        std::cout << "Invalid move!" << std::endl;
-//        return false;
-//    }
-//}

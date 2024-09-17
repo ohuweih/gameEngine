@@ -84,25 +84,22 @@ class GameState {
         // Functions called from main cpp
         std::string current_player;
         std::vector<std::vector<Piece*>> board;
-
+        std::vector<std::unique_ptr<Piece>> white_pieces;
+        std::vector<std::unique_ptr<Piece>> black_pieces;
 
         // Constructor
         GameState(); 
         ~GameState(); //Destructor
 
-//	    bool move_piece(int start_row, int start_col, int end_row, int end_col);
-
         // Function to display the chess board in the console (for debugging)
         void display_board() const;
-
         
         // Function to handle game logic (e.g., updating turns, selecting pieces)
         void update_game_logic(std::string& piece_name, std::string& action);
 
+        void initialize_board();
     private:
         // Functions called with in the GameState cpp
-    	void place_major_pieces(int row, const std::string& color);
-        void initialize_board();
     
 };
 
