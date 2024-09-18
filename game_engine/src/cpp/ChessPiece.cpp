@@ -23,8 +23,8 @@ bool Pawn::isValidMove(int newRow, int newCol, GameState& game_state) const {
 
     // Diagonal capture
     if (abs(newCol - col) == 1 && newRow == row + rowDirection) {
-        Piece* target_piece = game_state.board[newRow][newCol];
-        if (target_piece != nullptr && target_piece->getColor() != color) {
+        Piece* targetPiece = game_state.board[newRow][newCol];
+        if (targetPiece != nullptr && targetPiece->getColor() != color) {
             return true;
             } 
         }
