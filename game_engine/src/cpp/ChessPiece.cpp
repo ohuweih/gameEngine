@@ -73,16 +73,27 @@ std::string Rook::getName() const {
 
 
 bool Knight::isValidMove(int newRow, int newCol, GameState& game_state) const {
-    int rowDirection = (color == Color::White) ? -1 : 1;
-    if (newCol == col && newRow == row + rowDirection) {
+    int rowDiff = std::abs(row - newRow);
+    int colDiff = std::abs(col - newCol);
+    Piece* targetPiece = game_state.board[newRow][newCol];
+
+    // The L shape
+    if ((rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff ==2)) {
         if (game_state.board[newRow][newCol] == nullptr) {
-             return true;
+            return true;
+        }
+        else if (targetPiece->getColor() != color) {
+            return true;
+        } else {
+            return false;
         }
     }
+    return false;
 }
 
+
 std::string Knight::getName() const {
-    return (color == Color::White) ? "White Pawn" : "Black Pawn";
+    return (color == Color::White) ? "White Knight" : "Black Knight";
 }
 
 
