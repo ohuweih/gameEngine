@@ -38,16 +38,37 @@ std::string Pawn::getName() const {
 
 
 bool Rook::isValidMove(int newRow, int newCol, GameState& game_state) const {
-    int rowDirection = (color == Color::White) ? -1 : 1;
-    if (newCol == col && newRow == row + rowDirection) {
-        if (game_state.board[newRow][newCol] == nullptr) {
-             return true;
+    if (row != newRow && col != newCol) {
+        return false;
+    }
+
+    // Check if the path is blocked
+    if (row == newRow) {
+        int step = (col < newCol) ? 1 : -1;
+        for (int moveCol = col + step; moveCol !=newCol; moveCol += step) {
+            if (game_state.board[newRow][moveCol]) return false;
+        }
+    } else if (col == newCol) {
+         int step = (row < newRow) ? 1 : -1;
+         for (int moveRow = row + step; moveRow !=newRow; moveRow += step) {
+             if (game_state.board[moveRow][newCol]) return false;
+         }
+    }
+
+    Piece* targetPiece = game_state.board[newRow][newCol];
+    if (targetPiece) {
+        if (targetPiece->getColor() != color) {
+            return true;
+        } else {
+            return false;
         }
     }
+
+    return true;
 }
 
 std::string Rook::getName() const {
-    return (color == Color::White) ? "White Pawn" : "Black Pawn";
+    return (color == Color::White) ? "White Rook" : "Black Rook";
 }
 
 
