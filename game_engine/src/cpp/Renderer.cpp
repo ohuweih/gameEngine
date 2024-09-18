@@ -1,8 +1,8 @@
 #include "../header/Renderer.h"
 
 // Constants for board size
-const int TILE_SIZE = 75;  // Size of each square on the chessboard
 const int BOARD_SIZE = 8;  // Chessboard is 8x8
+const int TILE_SIZE = 75;
 
 // Function to render the chessboard
 void render_chessboard(SDL_Renderer* renderer) {
@@ -20,24 +20,40 @@ void render_chessboard(SDL_Renderer* renderer) {
     }
 }
 
+// Function to render the pieces
 void render_pieces(SDL_Renderer* renderer, const GameState& game_state) {
-    for (int row = 0; row < BOARD_SIZE; ++row) {
-        for (int col = 0; col < BOARD_SIZE; ++col) {
-            // Access the piece directly from the board using .get() on the unique_ptr
-            Piece* piece = game_state.board[row][col];  // Assuming board is a 2D vector of std::unique_ptr<Piece>
-            
-            if (piece != nullptr) {  // Check if a piece exists on the current square
-                if (piece->getColor() == Color::White) {  // Adjusted to use the Color enum
-                    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);  // Render white piece
-                } else {
-                    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);        // Render black piece
-                }
-                
-                // Render the piece as a simple square (you can expand this later to include textures)
-                SDL_Rect piece_rect = {col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE / 2, TILE_SIZE / 2};
-                SDL_RenderFillRect(renderer, &piece_rect);  // Draw the piece as a square
-            }
-        }
+    // Render white pieces
+    for (const auto& piece : game_state.wp) {
+        render_piece(renderer, piece.get());  // Render each white piece
+    }
+
+    // Render black pieces
+    for (const auto& piece : game_state.bp) {
+        render_piece(renderer, piece.get());  // Render each black piece
     }
 }
 
+// Helper function to render an individual piece
+void render_piece(SDL_Renderer* renderer, const Piece* piece) {
+    if (piece == nullptr) return;
+
+    // Set the color based on the piece's color
+    if (piece->getColor() == Color::White) {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);  // Render white piece
+    } else {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);        // Render black piece
+    }
+
+    // Use the piece's row and col to calculate its position on the board
+    int row = piece->getRow();
+    int col = piece->getCol();
+
+    // Render the piece as a simple square (you can replace this with textures if needed)
+    SDL_Rect piece_rect = {
+        col * TILE_SIZE + TILE_SIZE / 4,  // X position
+        row * TILE_SIZE + TILE_SIZE / 4,  // Y position
+        TILE_SIZE / 2,                    // Width
+        TILE_SIZE / 2                     // Height
+    };
+    SDL_RenderFillRect(renderer, &piece_rect);  // Draw the piece as a square
+}

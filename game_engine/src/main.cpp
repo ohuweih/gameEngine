@@ -5,7 +5,9 @@
 #include "header/Input.h"
 
 int main(int argc, char* argv[]) {
-    // Initialize SDL with the video subsystem
+    // Initialize SDL
+    const int TILE_SIZE = 75;
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
         return -1;
@@ -42,8 +44,7 @@ int main(int argc, char* argv[]) {
 
     // Track selected piece
     bool piece_selected = false;
-    int selected_row = -1;
-    int selected_col = -1;
+    Piece* selected_piece = nullptr;
 
     // Main game loop
     while (isRunning) {
@@ -56,32 +57,29 @@ int main(int argc, char* argv[]) {
                 int mouse_x, mouse_y;
                 SDL_GetMouseState(&mouse_x, &mouse_y);
 
-                int row = mouse_y / 75;  // Assuming a 75x75 square grid for simplicity
-                int col = mouse_x / 75;
+                int row = mouse_y / TILE_SIZE;  // Assuming a 75x75 square grid for simplicity
+                int col = mouse_x / TILE_SIZE;
 
                 if (row >= 0 && row < 8 && col >= 0 && col < 8) {
                     if (!piece_selected) {
-                        // Select a piece
-                        Piece* piece = game_state.board[row][col];
-                        if (piece) {  // Ensure there is a piece at this location
+                        // Select a piece from the game state's pieces
+                        selected_piece = game_state.get_piece_at(row, col);
+                        if (selected_piece) {
                             piece_selected = true;
-                            selected_row = row;
-                            selected_col = col;
-							char pieceName = piece->getName();
-							std::cout << "Piece selected: " << pieceName << std::endl;
+                            std::cout << "Piece selected: " << selected_piece->getName() << std::endl;
                         }
                     } else {
                         // Move the selected piece
-                        Piece* selected_piece = game_state.board[selected_row][selected_col];
-                        if (selected_piece && selected_piece->move(selected_row, selected_col, row, col, game_state.board)) {
-                            game_state.board[row][col] = game_state.board[selected_row][selected_col];// this is how we move pieces
-                            game_state.board[selected_row][selected_col] = nullptr; // Clear the old square
+                        if (selected_piece->isValidMove(row, col, game_state)) {
+                            selected_piece->move(row, col);
+                            std::cout << "Piece moved to: (" << row << ", " << col << ")" << std::endl;
                         } else {
                             std::cout << "Invalid move!" << std::endl;
                         }
 
                         // Reset selection
                         piece_selected = false;
+                        selected_piece = nullptr;
                     }
                 }
             }
@@ -91,8 +89,8 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        render_chessboard(renderer);  // Assuming this function is implemented
-        render_pieces(renderer, game_state);  // Assuming this function is implemented
+        render_chessboard(renderer);  // Renders the chessboard
+        render_pieces(renderer, game_state);  // Renders the chess pieces
 
         SDL_RenderPresent(renderer);
     }

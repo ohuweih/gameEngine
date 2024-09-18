@@ -1,107 +1,137 @@
 #ifndef GAMESTATE_H  // Include guard to prevent multiple inclusion
 #define GAMESTATE_H
 
+#include <algorithm>
 #include <iostream>
 #include <string>
-#include <vector>
 #include <memory>
+#include <vector>
+
+class GameState;
 
 enum class Color{
     White,
     Black
 };
 
-
 class Piece {
-    protected:
-        Color color; // The color of the piece
+	public:
+    	virtual bool isValidMove(int newRow, int newCol, GameState& game_state) const = 0;
+    	virtual void move(int newRow, int newCol) {
+        	row = newRow;
+        	col = newCol;
+    	}
+
+    	int getRow() const { return row; }
+    	int getCol() const { return col; }
+        Color getColor() const { return color; }
+    	virtual std::string getName() const = 0;
 
 
-    public:
-        Piece(Color c) : color(c){}
-
-        virtual ~Piece() = default;
-        virtual bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) = 0; // "common" method for all pieces This is a pure virtual placeholder
-        virtual char getName() const = 0; // Each piece can have its own name
-        Color getColor() const { return color; } 
+	protected:
+    	int row;
+    	int col;
+    	Color color;
 };
 
 
 class Pawn : public Piece {
     public:
-        Pawn(Color c) : Piece(c) {}
-        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;
-        char getName() const override;
-};
+    	Pawn(Color color, int row, int col) {
+        	this->color = color;
+        	this->row = row;
+        	this->col = col;
+    	}
 
+    	bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
+    	std::string getName() const override;
+
+};
 
 class Rook : public Piece {
     public:
-        Rook(Color c) : Piece(c) {}
-        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
-        char getName() const override;  // Declaration of getName
-};
+        Rook(Color color, int row, int col) {
+                this->color = color;
+                this->row = row;
+                this->col = col;
+        }
 
+        bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
+        std::string getName() const override;
+
+};
 
 class Knight : public Piece {
     public:
-        Knight(Color c) : Piece(c) {}
-        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
-        char getName() const override;  // Declaration of getName
+        Knight(Color color, int row, int col) {
+                this->color = color;
+                this->row = row;
+                this->col = col;
+        }
+
+        bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
+        std::string getName() const override;
+
 };
-
-
 
 class Bishop : public Piece {
     public:
-        Bishop(Color c) : Piece(c) {}
-        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
-        char getName() const override;  // Declaration of getName
-};
+        Bishop(Color color, int row, int col) {
+                this->color = color;
+                this->row = row;
+                this->col = col;
+        }
 
+        bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
+        std::string getName() const override;
+
+};
 
 class Queen : public Piece {
     public:
-        Queen(Color c) : Piece(c) {}
-        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
-        char getName() const override;  // Declaration of getName
-};
+        Queen(Color color, int row, int col) {
+                this->color = color;
+                this->row = row;
+                this->col = col;
+        }
 
+        bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
+        std::string getName() const override;
+
+};
 
 class King : public Piece {
     public:
-        King(Color c) : Piece(c) {}
-        bool move(int start_row, int start_col, int end_row, int end_col, const std::vector<std::vector<Piece*>>& board) override;  // Declaration of the move function
-        char getName() const override;  // Declaration of getName
+        King(Color color, int row, int col) {
+                this->color = color;
+                this->row = row;
+                this->col = col;
+        }
+
+        bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
+        std::string getName() const override;
+
 };
-
-
-
 
 // Declaration of GameState class
 class GameState {
     public:
         // Functions called from main cpp
         std::string current_player;
-        std::vector<std::vector<Piece*>> board;
-        std::vector<std::unique_ptr<Piece>> white_pieces;
-        std::vector<std::unique_ptr<Piece>> black_pieces;
+        std::vector<std::unique_ptr<Piece>> wp;
+        std::vector<std::unique_ptr<Piece>> bp;
 
         // Constructor
-        GameState(); 
-        ~GameState(); //Destructor
-
-        // Function to display the chess board in the console (for debugging)
-        void display_board() const;
-        
-        // Function to handle game logic (e.g., updating turns, selecting pieces)
-        void update_game_logic(std::string& piece_name, std::string& action);
+        GameState();
 
         void initialize_board();
+        void initialize_pieces();
+        void display_board() const;
+        void update_game_logic(std::string& piece_name, std::string& action);
+        Piece* get_piece_at(int row, int col) const;
+        void remove_piece_from_board(int row, int col, std::vector<std::unique_ptr<Piece>>& pieces);
     private:
         // Functions called with in the GameState cpp
-    
+
 };
-
-
 #endif  // GAMESTATE_H
