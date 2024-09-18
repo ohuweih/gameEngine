@@ -6,54 +6,60 @@
 GameState::GameState()
     : board(8, std::vector<Piece*>(8, nullptr))
 {
-    current_player = "White";
+    currentPlayer = "White";
     initialize_board();
 }
 
-GameState::~GameState() {
-    for (auto& row : board) {
-        for (auto& piece : row){
-            delete piece;
-        }
-    }
-}
+//GameState::~GameState() {
+//    for (auto& row : board) {
+//        for (auto& piece : row){
+//            delete piece;
+//        }
+//    }
+//}
 
 // Function to set up the chess board
 void GameState::initialize_board() {
 
     // Place all pawns
     for (int i = 0; i < 8; ++i) {
-        board[6][i] = new Pawn(Color::White);
-        board[1][i] = new Pawn(Color::Black);
+        pieces.push_back(std::make_unique<Pawn>(Color::White, 6, i)); // Make unique Pawns
+        board[6][i] = pieces.back().get();  // Store raw pointer to the piece on the board
+        pieces.push_back(std::make_unique<Pawn>(Color::Black, 1, i));
+        board[1][i] = pieces.back().get();
     }
 
     // Place major pieces
-    place_major_pieces(7, "White");
-    place_major_pieces(0, "Black");
+    place_major_pieces(7, Color::White);
+    place_major_pieces(0, Color::Black);
 }
 
 
 // Function to place major pieces
-void GameState::place_major_pieces(int row, const std::string& color) {
-    Color piece_color;
+void GameState::place_major_pieces(int row, Color color) {
+    pieces.push_back(std::make_unique<Rook>(color, row, 0));
+    board[row][0] = pieces.back().get();
 
-    if (color == "White") {
-        piece_color = Color::White;
-    } else if (color == "Black") {
-        piece_color = Color::Black;
-    } else {
-        std::cerr << "Invalid color : " << color << std::endl;
-        return; // Exit if color is invalid
-    }
+    pieces.push_back(std::make_unique<Knight>(color, row, 1));
+    board[row][1] = pieces.back().get();
 
-    board[row][0] = new Rook(piece_color);
-    board[row][1] = new Knight(piece_color);
-    board[row][2] = new Bishop(piece_color);
-    board[row][3] = new Queen(piece_color);
-    board[row][4] = new King(piece_color);
-    board[row][5] = new Bishop(piece_color);
-    board[row][6] = new Knight(piece_color);
-    board[row][7] = new Rook(piece_color);
+    pieces.push_back(std::make_unique<Bishop>(color, row, 2));
+    board[row][2] = pieces.back().get();
+
+    pieces.push_back(std::make_unique<Queen>(color, row, 3));
+    board[row][3] = pieces.back().get();
+
+    pieces.push_back(std::make_unique<King>(color, row, 4));
+    board[row][4] = pieces.back().get();
+
+    pieces.push_back(std::make_unique<Bishop>(color, row, 5));
+    board[row][5] = pieces.back().get();
+
+    pieces.push_back(std::make_unique<Knight>(color, row, 6));
+    board[row][6] = pieces.back().get();
+
+    pieces.push_back(std::make_unique<Rook>(color, row, 7));
+    board[row][7] = pieces.back().get();
 }
 
 
@@ -73,19 +79,59 @@ void GameState::display_board() const {
 }
 
 
-// Function to handle game logic (simulating user input)
-void GameState::update_game_logic(std::string& piece_name, std::string& action) {
-    std::cout << "It's " << current_player << "'s turn." << std::endl;
-    std::cout << "Choose a piece: ";
-    std::cin >> piece_name;
+// Move a piece form one location to another
+bool GameState::move_piece(int startRow, int startCol, int endRow, int endCol) {
+    Piece* piece = board[startRow][startCol];
 
-    std::cout << "Choose an action: ";
-    std::cin >> action;
+    if (!piece) {
+        std::cout << "No piece at the start position!\n";
+        return false;
+    }
 
-    // Switch player
-    if (current_player == "White") {
-        current_player = "Black";
+    // Check for vaild move
+    if (piece->isValidMove(endRow, endCol, *this)) {
+        Piece* targetPiece = board[endRow][endCol];
+        if (targetPiece) {
+            if (targetPiece->getColor() != piece->getColor()) {
+                // Dekete the captured piece by removing it from the vector
+                auto it = std::remove_if(pieces.begin(), pieces.end(), [targetPiece](const std::unique_ptr<Piece> & p) {
+                        return p.get() == targetPiece;
+                        });
+            } else {
+                std::cout << "Invaild move! Cannot capture your own piece.\n";
+                return false;
+            }
+        }
+        
+        // Move the piece
+        board[endRow][endCol] = piece;
+        board[startRow][startCol] = nullptr;
+
+        // Update the piece's internal position
+        piece->move(endRow, endCol);
+
+        //Switch player
+        currentPlayer = (currentPlayer == "White") ? "Black" : "White";
+        return true;
     } else {
-        current_player = "White";
+        std::cout << "Invaild Move!\n";
+        return false;
     }
 }
+
+// Function to handle game logic (simulating user input)
+//void GameState::update_game_logic(std::string& piece_name, std::string& action) {
+//    std::cout << "It's " << current_player << "'s turn." << std::endl;
+//    std::cout << "Choose a piece: ";
+//    std::cin >> piece_name;
+//
+//    std::cout << "Choose an action: ";
+//    std::cin >> action;
+//
+//    // Switch player
+//    if (current_player == "White") {
+//        current_player = "Black";
+//    } else {
+//        current_player = "White";
+//    }
+//}

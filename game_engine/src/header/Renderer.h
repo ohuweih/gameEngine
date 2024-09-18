@@ -10,4 +10,5 @@ void render_chessboard(SDL_Renderer* renderer);
 // render chess pieces
 void render_pieces(SDL_Renderer* renderer, const GameState& game_state);
 
+void render_piece(SDL_Renderer* renderer, const Piece* piece);
 #endif
