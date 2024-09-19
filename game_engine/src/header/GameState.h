@@ -37,14 +37,16 @@ class Piece {
         virtual ~Piece() = default;  // Default virtual destructor for polymorphism what ever that is
 
     	virtual bool isValidMove(int newRow, int newCol, GameState& game_state) const = 0;
-    	virtual void move(int newRow, int newCol, int turnNumber) {
-            // Log the move
-            movementLog.push_back(MoveEntry(row, col, newRow, newCol, turnNumber, getName()));
 
+        void move(int newRow, int newCol) {
             // Update piece position
-        	row = newRow;
+       	    row = newRow;
         	col = newCol;
     	}
+        
+        void logMove(int newRow, int newCol, int turnNumber) {
+            movementLog.push_back(MoveEntry(row, col, newRow, newCol, turnNumber, getName()));
+        }
 
         bool hasMoved() const { return !movementLog.empty();}
 
@@ -143,13 +145,14 @@ class GameState {
 
         void initialize_board();
         void display_board() const;
-        bool move_piece(int startRow, int startCol, int endRow, int endCol);
+        void update_status(int newRow, int newCol, Piece* piece);
 //        void update_game_logic(std::string& piece_name, std::string& action);
 
     private:
         // Functions called with in the GameState cpp
         std::vector<std::unique_ptr<Piece>> pieces;
         void place_major_pieces(int row, Color color);
+        void analyzePieceMoves(const Piece* piece);
 };
 
 
