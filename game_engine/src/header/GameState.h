@@ -6,8 +6,22 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "MoveEntry.h"
+#include "SpecialState.h"
 
+class SpecialState;
 class GameState;
+
+
+enum class PieceType {
+    King,
+    Queen,
+    Rook,
+    Bishop,
+    Knight,
+    Pawn
+};
+
 
 enum class Color{
     White,
@@ -23,21 +37,30 @@ class Piece {
         virtual ~Piece() = default;  // Default virtual destructor for polymorphism what ever that is
 
     	virtual bool isValidMove(int newRow, int newCol, GameState& game_state) const = 0;
-    	virtual void move(int newRow, int newCol) {
+    	virtual void move(int newRow, int newCol, int turnNumber) {
+            // Log the move
+            movementLog.push_back(MoveEntry(row, col, newRow, newCol, turnNumber, getName()));
+
+            // Update piece position
         	row = newRow;
         	col = newCol;
     	}
+
+        bool hasMoved() const { return !movementLog.empty();}
+
+        const std::vector<MoveEntry>& getMovementLog() const { return movementLog; }
 
     	int getRow() const { return row; }
     	int getCol() const { return col; }
         Color getColor() const { return color; }
     	virtual std::string getName() const = 0;
-
+		virtual PieceType getType() const = 0;
 
 	protected:
     	int row;
     	int col;
     	Color color;
+        std::vector<MoveEntry> movementLog;
 };
 
 
@@ -48,7 +71,7 @@ class Pawn : public Piece {
 
     	bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
     	std::string getName() const override;
-
+        PieceType getType() const override;
 };
 
 class Rook : public Piece {
@@ -58,7 +81,7 @@ class Rook : public Piece {
 
         bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
         std::string getName() const override;
-
+        PieceType getType() const override;
 };
 
 class Knight : public Piece {
@@ -68,6 +91,7 @@ class Knight : public Piece {
 
         bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
         std::string getName() const override;
+        PieceType getType() const override;
 
 };
 
@@ -78,6 +102,7 @@ class Bishop : public Piece {
 
         bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
         std::string getName() const override;
+        PieceType getType() const override;
 
 };
 
@@ -88,6 +113,7 @@ class Queen : public Piece {
 
         bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
         std::string getName() const override;
+        PieceType getType() const override;
 
 };
 
@@ -98,6 +124,7 @@ class King : public Piece {
 
         bool isValidMove(int newRow, int newCol, GameState& game_state) const override;
         std::string getName() const override;
+        PieceType getType() const override;
 
 };
 
@@ -108,6 +135,7 @@ class GameState {
         // Functions called from main cpp
         std::string currentPlayer;
         std::vector<std::vector<Piece*>> board;
+        int turnNumber; 
 
         // Constructor
         GameState(); 
