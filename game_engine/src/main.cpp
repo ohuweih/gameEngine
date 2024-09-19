@@ -5,6 +5,7 @@
 
 int main(int argc, char* argv[]) {
     const int TILE_SIZE = 75;
+    const int turnNumber = 1;
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -76,7 +77,7 @@ int main(int argc, char* argv[]) {
                             // Move the piece
                             game_state.board[row][col] = selected_piece;  // Place selected piece at new position
                             game_state.board[selected_row][selected_col] = nullptr;  // Clear the original spot
-                            selected_piece->move(row, col);  // Update internal position
+                            selected_piece->move(row, col, turnNumber);  // Update internal position
                             std::cout << "Piece moved to: (" << row << ", " << col << ")" << std::endl;
                         } else {
                             std::cout << "Invalid move!" << std::endl;
