@@ -4,7 +4,8 @@
 
 // Constructor for GameState
 GameState::GameState()
-    : board(8, std::vector<Piece*>(8, nullptr))
+    : board(8, std::vector<Piece*>(8, nullptr)),
+      turnNumber(1)
 {
     currentPlayer = "White";
     initialize_board();
@@ -108,8 +109,9 @@ bool GameState::move_piece(int startRow, int startCol, int endRow, int endCol) {
         board[startRow][startCol] = nullptr;
 
         // Update the piece's internal position
-        piece->move(endRow, endCol);
-
+        piece->move(endRow, endCol, turnNumber);
+        turnNumber++;
+        
         //Switch player
         currentPlayer = (currentPlayer == "White") ? "Black" : "White";
         return true;
@@ -118,6 +120,16 @@ bool GameState::move_piece(int startRow, int startCol, int endRow, int endCol) {
         return false;
     }
 }
+
+
+void analyzePieceMoves(const Piece* piece) {
+    const std::vector<MoveEntry>& log = piece->getMovementLog();
+    for (const MoveEntry& move : log) {
+        std::cout << move.pieceName << " moved from (" << move.startRow << ", " << move.startCol << ") to ("
+                  << move.endRow << ", " << move.endCol << ") on turn " << move.turnNumber << "\n";
+    }
+}
+
 
 // Function to handle game logic (simulating user input)
 //void GameState::update_game_logic(std::string& piece_name, std::string& action) {
