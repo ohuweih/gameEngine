@@ -185,10 +185,8 @@ bool King::isValidMove(int newRow, int newCol, GameState& game_state) const {
 
     // Castle logic
     if (rowDiff == 0 && (colDiff == 2 || colDiff == -2)) {
-        if (SpecialState::canCastle(game_state, this)) {
-            return true; //Castling is allowed
+        return SpecialState::canCastle(game_state, this, newCol);
         }
-    }
 
     // Invalid move
     return false;

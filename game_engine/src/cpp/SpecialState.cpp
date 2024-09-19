@@ -1,33 +1,52 @@
 #include "../header/SpecialState.h"
 
-bool SpecialState::canCastle(GameState& game_state, const Piece* king) {
-    int direction = (king->getCol() == 4 && king->getColor() == Color::White) ? 1 : -1;  // Determine kingside or queenside
+bool SpecialState::canCastle(GameState& game_state, const Piece* king, int newCol) {
+    bool isKingside = false;
+    bool isQueenside = false;
 
-    // Check if the king or rook has moved, or if the king is in check
-    if (SpecialState::isInCheck(game_state, king) ||
-        SpecialState::passesThroughCheck(game_state, king, king->getCol() + direction)) {
-        return false;
+    // Determine if we are castling kingside or queenside
+    if (newCol == 6 && king->getCol() == 4) {  // Kingside castling move
+        isKingside = true;
+    } else if (newCol == 2 && king->getCol() == 4) {  // Queenside castling move
+        isQueenside = true;
+    } else {
+        return false;  // Not a castling move
     }
 
-    // Find the rook
-    int rookCol = (direction == 1) ? 7 : 0;  // Kingside rook is at col 7, queenside rook at col 0
+    // Determine the rook's column
+    int rookCol = isKingside ? 7 : 0;  // Kingside rook is in col 7, queenside rook is in col 0
     Piece* rook = game_state.board[king->getRow()][rookCol];
 
+    // Ensure the rook is valid and hasn't moved
     if (rook == nullptr || rook->getType() != PieceType::Rook || rook->hasMoved()) {
         return false;  // Invalid rook for castling
     }
 
-    // Move the rook (cast Piece* to Rook*)
-    Rook* castedRook = dynamic_cast<Rook*>(rook);
-    if (castedRook) {
-        int rookNewCol = (direction == 1) ? king->getCol() + 1 : king->getCol() - 1;  // Rook moves next to the king
-        game_state.board[king->getRow()][rookNewCol] = game_state.board[king->getRow()][rookCol];
-        game_state.board[king->getRow()][rookCol] = nullptr;
-        castedRook->move(king->getRow(), rookNewCol, game_state.turnNumber);  // Call move on the casted rook
+    // Ensure the king is not in check or passing through check
+    if (SpecialState::isInCheck(game_state, king) ||
+        SpecialState::passesThroughCheck(game_state, king, (isKingside ? 5 : 3)) ||  // Check passing square
+        SpecialState::passesThroughCheck(game_state, king, newCol)) {  // Check final square
+        return false;
     }
+
+    // Move the rook next to the king
+    int rookNewCol = isKingside ? 5 : 3;  // Rook moves next to the king (column 5 or 3)
+    game_state.board[king->getRow()][rookNewCol] = game_state.board[king->getRow()][rookCol];
+    game_state.board[king->getRow()][rookCol] = nullptr;
+
+    // Move the rook on the board and update the move log
+    dynamic_cast<Rook*>(rook)->move(king->getRow(), rookNewCol, game_state.turnNumber);
+
+    // Now move the king itself
+    game_state.board[king->getRow()][newCol] = game_state.board[king->getRow()][king->getCol()];
+    game_state.board[king->getRow()][king->getCol()] = nullptr;
+
+    // Casted king should also update its position
+    const_cast<Piece*>(king)->move(king->getRow(), newCol, game_state.turnNumber);  // Updating king's position
 
     return true;  // Castling completed
 }
+
 
 // Function to check if the King is in check
 bool SpecialState::isInCheck(const GameState& game_state, const Piece* king) {

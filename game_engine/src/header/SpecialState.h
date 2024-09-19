@@ -9,7 +9,7 @@ class Piece;
 class SpecialState {
     public:
         // Function to check if castling is allowed
-        static bool canCastle(GameState& game_state, const Piece* king);
+        static bool canCastle(GameState& game_state, const Piece* king, int newCol);
 
         // Function to check if the King is in check
         static bool isInCheck(const GameState& game_state, const Piece* king);
