@@ -1,5 +1,6 @@
 #include "../header/SpecialState.h"
 
+
 bool SpecialState::canCastle(GameState& game_state, const Piece* king, int newCol) {
     bool isKingside = false;
     bool isQueenside = false;
@@ -22,6 +23,10 @@ bool SpecialState::canCastle(GameState& game_state, const Piece* king, int newCo
         return false;  // Invalid rook for castling
     }
 
+    if (king->hasMoved()) {
+        return false;
+    }
+
     // Ensure the king is not in check or passing through check
     if (SpecialState::isInCheck(game_state, king) ||
         SpecialState::passesThroughCheck(game_state, king, (isKingside ? 5 : 3)) ||  // Check passing square
@@ -35,14 +40,14 @@ bool SpecialState::canCastle(GameState& game_state, const Piece* king, int newCo
     game_state.board[king->getRow()][rookCol] = nullptr;
 
     // Move the rook on the board and update the move log
-    dynamic_cast<Rook*>(rook)->move(king->getRow(), rookNewCol, game_state.turnNumber);
+    dynamic_cast<Rook*>(rook)->move(king->getRow(), rookNewCol);
 
     // Now move the king itself
     game_state.board[king->getRow()][newCol] = game_state.board[king->getRow()][king->getCol()];
     game_state.board[king->getRow()][king->getCol()] = nullptr;
 
     // Casted king should also update its position
-    const_cast<Piece*>(king)->move(king->getRow(), newCol, game_state.turnNumber);  // Updating king's position
+    const_cast<Piece*>(king)->move(king->getRow(), newCol);  // Updating king's position
 
     return true;  // Castling completed
 }
