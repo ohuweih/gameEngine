@@ -81,48 +81,18 @@ void GameState::display_board() const {
 
 
 // Move a piece form one location to another
-bool GameState::move_piece(int startRow, int startCol, int endRow, int endCol) {
-    Piece* piece = board[startRow][startCol];
+void GameState::update_status(int newRow, int newCol, Piece* piece) {
 
-    if (!piece) {
-        std::cout << "No piece at the start position!\n";
-        return false;
-    }
+    piece->logMove(newRow, newCol, turnNumber);
+    turnNumber++;
+    std::cout << "Analyzing piece moves...\n" << std::endl;
+    analyzePieceMoves(piece);
 
-    // Check for vaild move
-    if (piece->isValidMove(endRow, endCol, *this)) {
-        Piece* targetPiece = board[endRow][endCol];
-        if (targetPiece) {
-            if (targetPiece->getColor() != piece->getColor()) {
-                // Dekete the captured piece by removing it from the vector
-                auto it = std::remove_if(pieces.begin(), pieces.end(), [targetPiece](const std::unique_ptr<Piece> & p) {
-                        return p.get() == targetPiece;
-                        });
-            } else {
-                std::cout << "Invaild move! Cannot capture your own piece.\n";
-                return false;
-            }
-        }
-        
-        // Move the piece
-        board[endRow][endCol] = piece;
-        board[startRow][startCol] = nullptr;
-
-        // Update the piece's internal position
-        piece->move(endRow, endCol, turnNumber);
-        turnNumber++;
-        
-        //Switch player
-        currentPlayer = (currentPlayer == "White") ? "Black" : "White";
-        return true;
-    } else {
-        std::cout << "Invaild Move!\n";
-        return false;
-    }
+    //Switch player
+    currentPlayer = (currentPlayer == "White") ? "Black" : "White";
 }
 
-
-void analyzePieceMoves(const Piece* piece) {
+void GameState::analyzePieceMoves(const Piece* piece) {
     const std::vector<MoveEntry>& log = piece->getMovementLog();
     for (const MoveEntry& move : log) {
         std::cout << move.pieceName << " moved from (" << move.startRow << ", " << move.startCol << ") to ("
