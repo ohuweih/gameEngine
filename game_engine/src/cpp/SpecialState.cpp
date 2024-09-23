@@ -55,9 +55,75 @@ bool SpecialState::canCastle(GameState& game_state, const Piece* king, int newCo
 
 // Function to check if the King is in check
 bool SpecialState::isInCheck(const GameState& game_state, const Piece* king) {
-    // Logic to check if any opponent piece can attack the King's position
-    // You can iterate over the opponent's pieces and check if any can move to the King's position
-    // Return true if the King is in check, otherwise false
+    int kingRow = king->getRow();
+    int kingCol = king->getCol();
+    int pawnRowDir = (king->getColor() == Color::White) ? -1 : 1;
+    Color opponentColor = (king->getColor() == Color::White) ? Color::Black : Color::White;
+
+    //Check via possible attack directions
+    //Define possible directions for rook-like (straight), bishop-like (diagonal), and knight movements
+    std::vector<std::pair<int, int>> rookDirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    std::vector<std::pair<int, int>> bishopDirs = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+    std::vector<std::pair<int, int>> knightMoves = {{2, 1}, {2, -1}, {-2, 1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
+    std::vector<std::pair<int, int >> pawnAttacks = {{pawnRowDir, -1}, {pawnRowDir, 1}};
+
+    // Check rook and queen(rook-like) attacks
+    for (const auto& dir : rookDirs) {
+        int r = kingRow + dir.first;
+        int c = kingCol + dir.second;
+        while (r >= 0 && r < 8 && c >=0 && c < 8) {
+            Piece* opponentPiece = game_state.board[r][c];
+            if (opponentPiece && opponentPiece->getColor() == opponentColor) {
+                if (opponentPiece->getType() == PieceType::Rook || opponentPiece->getType() == PieceType::Queen) {
+                    return true; // in check via rook or queen
+                }
+                break; // Path blocked by another piece .. this might work this way.. revist after test
+            }
+            r += dir.first;
+            c += dir.second;
+        }
+    }
+
+    // check bishops and queen(bishop-like) attacks
+    for (const auto& dir : bishopDirs) { 
+        int r = kingRow + dir.first;
+        int c = kingCol + dir.second;
+        while (r >= 0 && r < 8 && c >=0 && c < 8) {
+            Piece* opponentPiece = game_state.board[r][c];
+            if (opponentPiece && opponentPiece->getColor() == opponentColor) {
+                if (opponentPiece->getType() == PieceType::Bishop || opponentPiece->getType() == PieceType::Queen) {
+                    return true;
+                }
+                break;
+            }
+            r += dir.first;
+            c += dir.second;
+        }
+    }
+
+    // Check knight attacks
+    for (const auto& move : knightMoves) {
+        int r = kingRow + move.first;
+        int c = kingCol + move.second;
+        if (r >= 0 && r < 8 && c >=0 && c < 8) {
+            Piece* opponentPiece = game_state.board[r][c];
+            if (opponentPiece && opponentPiece->getColor() == opponentColor && opponentPiece->getType() == PieceType::Knight) {
+                return true;
+            }
+        }
+    }
+
+    for (const auto& dir : pawnAttacks) {
+        int r = kingRow + dir.first;
+        int c = kingCol + dir.second;
+        if (r >= 0 &&  r < 8 && c >=0 && c < 8) {
+            Piece* opponentPiece = game_state.board[r][c];
+            if (opponentPiece && opponentPiece->getColor() == opponentColor && opponentPiece->getType() == PieceType::Pawn) {
+                return true;
+            }
+        }
+    }
+
     return false;
 }
 

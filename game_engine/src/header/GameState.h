@@ -8,7 +8,7 @@
 #include <memory>
 #include "MoveEntry.h"
 #include "SpecialState.h"
-#include "Piece.h"
+#include "ChessPiece.h"
 
 
 // Declaration of GameState class
