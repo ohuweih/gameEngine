@@ -9,7 +9,7 @@
 #include "MoveEntry.h"
 #include "SpecialState.h"
 #include "ChessPiece.h"
-
+#include "PieceTypes.h"
 
 // Declaration of GameState class
 class GameState {

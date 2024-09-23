@@ -28,8 +28,7 @@ bool SpecialState::canCastle(GameState& game_state, const Piece* king, int newCo
     }
 
     // Ensure the king is not in check or passing through check
-    if (SpecialState::isInCheck(game_state, king) ||
-        SpecialState::passesThroughCheck(game_state, king, (isKingside ? 5 : 3)) ||  // Check passing square
+    if (SpecialState::isInCheck(game_state, king->getRow(), king->getCol(), king->getColor()) ||
         SpecialState::passesThroughCheck(game_state, king, newCol)) {  // Check final square
         return false;
     }
@@ -54,91 +53,116 @@ bool SpecialState::canCastle(GameState& game_state, const Piece* king, int newCo
 
 
 // Function to check if the King is in check
-bool SpecialState::isInCheck(const GameState& game_state, const Piece* king) {
-    int kingRow = king->getRow();
-    int kingCol = king->getCol();
-    int pawnRowDir = (king->getColor() == Color::White) ? -1 : 1;
-    Color opponentColor = (king->getColor() == Color::White) ? Color::Black : Color::White;
+bool SpecialState::isInCheck(const GameState& game_state, int row, int col, Color kingColor) {
+    int pawnRowDir = (kingColor == Color::White) ? -1 : 1;
+    Color opponentColor = (kingColor == Color::White) ? Color::Black : Color::White;
 
-    //Check via possible attack directions
-    //Define possible directions for rook-like (straight), bishop-like (diagonal), and knight movements
+    std::cout << "Current king position: (" << row << ", " << col << ")\n";
+    std::cout << "Checking for attacks from color: " << (opponentColor == Color::White ? "White" : "Black") << "\n";
+
+    // Rook and Queen (rook-like) attacks
     std::vector<std::pair<int, int>> rookDirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    std::vector<std::pair<int, int>> bishopDirs = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-    std::vector<std::pair<int, int>> knightMoves = {{2, 1}, {2, -1}, {-2, 1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
-    std::vector<std::pair<int, int >> pawnAttacks = {{pawnRowDir, -1}, {pawnRowDir, 1}};
-
-    // Check rook and queen(rook-like) attacks
     for (const auto& dir : rookDirs) {
-        int r = kingRow + dir.first;
-        int c = kingCol + dir.second;
-        while (r >= 0 && r < 8 && c >=0 && c < 8) {
+        int r = row + dir.first;
+        int c = col + dir.second;
+        while (r >= 0 && r < 8 && c >= 0 && c < 8) {
             Piece* opponentPiece = game_state.board[r][c];
-            if (opponentPiece && opponentPiece->getColor() == opponentColor) {
-                if (opponentPiece->getType() == PieceType::Rook || opponentPiece->getType() == PieceType::Queen) {
-                    return true; // in check via rook or queen
+            if (opponentPiece) {
+                std::cout << "Found piece at (" << r << ", " << c << "): " << opponentPiece->getName() << "\n";
+                if (opponentPiece->getColor() == opponentColor && 
+                    (opponentPiece->getType() == PieceType::Rook || opponentPiece->getType() == PieceType::Queen)) {
+                    std::cout << "King is in check from " << opponentPiece->getName() << " at (" << r << ", " << c << ")\n";
+                    return true; // In check via rook or queen
                 }
-                break; // Path blocked by another piece .. this might work this way.. revist after test
+                break; // Path blocked
             }
             r += dir.first;
             c += dir.second;
         }
     }
 
-    // check bishops and queen(bishop-like) attacks
-    for (const auto& dir : bishopDirs) { 
-        int r = kingRow + dir.first;
-        int c = kingCol + dir.second;
-        while (r >= 0 && r < 8 && c >=0 && c < 8) {
+    // Bishop and Queen (bishop-like) attacks
+    std::vector<std::pair<int, int>> bishopDirs = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+    for (const auto& dir : bishopDirs) {
+        int r = row + dir.first;
+        int c = col + dir.second;
+        while (r >= 0 && r < 8 && c >= 0 && c < 8) {
             Piece* opponentPiece = game_state.board[r][c];
-            if (opponentPiece && opponentPiece->getColor() == opponentColor) {
-                if (opponentPiece->getType() == PieceType::Bishop || opponentPiece->getType() == PieceType::Queen) {
-                    return true;
+            if (opponentPiece) {
+                std::cout << "Found piece at (" << r << ", " << c << "): " << opponentPiece->getName() << "\n";
+                if (opponentPiece->getColor() == opponentColor &&
+                    (opponentPiece->getType() == PieceType::Bishop || opponentPiece->getType() == PieceType::Queen)) {
+                    std::cout << "King is in check from " << opponentPiece->getName() << " at (" << r << ", " << c << ")\n";
+                    return true; // In check via bishop or queen
                 }
-                break;
+                break; // Path blocked
             }
             r += dir.first;
             c += dir.second;
         }
     }
 
-    // Check knight attacks
+    // Knight attacks
+    std::vector<std::pair<int, int>> knightMoves = {{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
     for (const auto& move : knightMoves) {
-        int r = kingRow + move.first;
-        int c = kingCol + move.second;
-        if (r >= 0 && r < 8 && c >=0 && c < 8) {
+        int r = row + move.first;
+        int c = col + move.second;
+        if (r >= 0 && r < 8 && c >= 0 && c < 8) {
             Piece* opponentPiece = game_state.board[r][c];
             if (opponentPiece && opponentPiece->getColor() == opponentColor && opponentPiece->getType() == PieceType::Knight) {
-                return true;
+                std::cout << "King is in check from Knight at (" << r << ", " << c << ")\n";
+                return true; // In check via knight
             }
         }
     }
 
+    // Pawn attacks
+    std::vector<std::pair<int, int>> pawnAttacks = {{pawnRowDir, -1}, {pawnRowDir, 1}};
     for (const auto& dir : pawnAttacks) {
-        int r = kingRow + dir.first;
-        int c = kingCol + dir.second;
-        if (r >= 0 &&  r < 8 && c >=0 && c < 8) {
+        int r = row + dir.first;
+        int c = col + dir.second;
+        if (r >= 0 && r < 8 && c >= 0 && c < 8) {
             Piece* opponentPiece = game_state.board[r][c];
             if (opponentPiece && opponentPiece->getColor() == opponentColor && opponentPiece->getType() == PieceType::Pawn) {
-                return true;
+                std::cout << "King is in check from Pawn at (" << r << ", " << c << ")\n";
+                return true; // In check via pawn
             }
         }
     }
 
-    return false;
+    std::cout << "King is not in check\n";
+    return false; // King is not in check
 }
 
-// Function to check if the King passes through check during castling
 bool SpecialState::passesThroughCheck(GameState& game_state, const Piece* king, int newCol) {
-    // Temporarily move the King to the new column and check if it's in check
     int originalCol = king->getCol();
-    game_state.board[king->getRow()][newCol] = game_state.board[king->getRow()][originalCol];  // Temporarily move
-    game_state.board[king->getRow()][originalCol] = nullptr;  // Empty the old position
+    int direction = (newCol > originalCol) ? 1 : -1;
 
-    bool isCheck = SpecialState::isInCheck(game_state, king);
+    std::cout << "Starting passesThroughCheck. King is at (" << king->getRow() << ", " << originalCol << "), newCol: " << newCol << std::endl;
 
-    // Restore the original board state
-    game_state.board[king->getRow()][originalCol] = game_state.board[king->getRow()][newCol];
-    game_state.board[king->getRow()][newCol] = nullptr;
+    // Move through each column the king passes
+    for (int col = originalCol + direction; col != newCol + direction; col += direction) {
+        std::cout << "Checking if king passes through check at col = " << col << std::endl;
 
-    return isCheck;
+        // Temporarily simulate king's move to this square
+        Piece* tempPiece = game_state.board[king->getRow()][col];  // Save what is currently at this square
+        game_state.board[king->getRow()][col] = const_cast<Piece*>(king);  // Temporarily move the king here
+
+        std::cout << "tempPiece location " << king->getRow() << ", " << col << std::endl;
+        // Check if the king is in check at this square
+        if (SpecialState::isInCheck(game_state, king->getRow(), col, king->getColor())) {
+            std::cout << "King is in check at col = " << col << ", castling not allowed" << std::endl;
+
+            // Restore the original piece
+            game_state.board[king->getRow()][col] = tempPiece;  // Restore original piece
+            return true;  // King passes through check, castling is not allowed
+        }
+
+        // Restore the original piece (undo the temporary move)
+        game_state.board[king->getRow()][col] = tempPiece;
+    }
+
+    std::cout << "King passed through all columns safely, castling allowed" << std::endl;
+    return false;  // King did not pass through check, castling is allowed
 }
+

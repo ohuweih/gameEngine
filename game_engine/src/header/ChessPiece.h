@@ -8,25 +8,10 @@
 #include <memory>
 #include "MoveEntry.h"
 #include "SpecialState.h"
+#include "PieceTypes.h"
 
 class SpecialState;
 class GameState;
-
-
-enum class PieceType {
-    King,
-    Queen,
-    Rook,
-    Bishop,
-    Knight,
-    Pawn
-};
-
-
-enum class Color{
-    White,
-    Black
-};
 
 
 class Piece {
